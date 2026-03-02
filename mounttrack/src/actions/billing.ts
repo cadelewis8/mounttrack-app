@@ -39,7 +39,7 @@ export async function createSubscriptionCheckout(_prevState?: BillingState, _for
   redirect(session.url!)
 }
 
-export async function createPortalSession(): Promise<BillingState> {
+export async function createPortalSession(_prevState?: BillingState, _formData?: FormData): Promise<BillingState> {
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()
   const userId = data?.claims?.sub ?? null

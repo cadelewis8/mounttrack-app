@@ -1,8 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Skill(gsd:plan-phase)",
+      "WebSearch",
+      "Skill(gsd:progress)",
+      "Skill(gsd:execute-phase)"
     ]
   }
 }
-
