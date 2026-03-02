@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-02T23:11:38Z"
+last_updated: "2026-03-02T23:23:32Z"
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -23,28 +23,28 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 1 of 7 (Foundation)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-03-02 — Completed 01-02 auth pages and Server Actions
+Last activity: 2026-03-02 — Completed 01-03 onboarding wizard and Stripe billing
 
-Progress: [██░░░░░░░░] 7% (2 of 28 estimated total plans)
+Progress: [███░░░░░░░] 11% (3 of 28 estimated total plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 6 min
-- Total execution time: 0.20 hours
+- Total plans completed: 3
+- Average duration: 7 min
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 2 | 12 min | 6 min |
+| 01-foundation | 3 | 22 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 10 min, 2 min
-- Trend: Fast execution on auth pages (thin layer over established scaffold)
+- Last 5 plans: 10 min, 2 min, 10 min
+- Trend: Consistent execution; Stripe type compatibility issue added ~5 min debug time
 
 *Updated after each plan completion*
 
@@ -52,6 +52,7 @@ Progress: [██░░░░░░░░] 7% (2 of 28 estimated total plans)
 |------|----------|-------|-------|
 | Phase 01-foundation P01 | 10 min | 2 tasks | 17 files |
 | Phase 01-foundation P02 | 2 min | 2 tasks | 8 files |
+| Phase 01-foundation P03 | 10 min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation P02]: Server Actions use (prevState, formData) two-parameter signature — required by useActionState in React 19
 - [Phase 01-foundation P02]: /auth/confirm placed outside (auth) route group — Supabase email links must bypass the auth gate
 - [Phase 01-foundation P02]: forgotPassword always returns same response regardless of email existence — prevents enumeration
+- [Phase 01-foundation P03]: Stripe checkout includes shop_id in BOTH session.metadata AND subscription_data.metadata — session metadata handles checkout.session.completed, subscription metadata handles subscription lifecycle events
+- [Phase 01-foundation P03]: Supabase hand-written types require (supabase.from() as any) with explicit return type assertions for insert/update/upsert — supabase-js v2.98 GenericSchema constraint causes never inference without Relationships/Views/Functions fields
+- [Phase 01-foundation P03]: /onboarding/complete polls shop record for subscription_status=active — handles Stripe redirect arriving before async webhook fires
 
 ### Pending Todos
 
@@ -84,5 +88,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 01-foundation-02-PLAN.md — next is 01-03 (onboarding wizard)
+Stopped at: Completed 01-foundation-03-PLAN.md — next is 01-04 (shop settings page)
 Resume file: None

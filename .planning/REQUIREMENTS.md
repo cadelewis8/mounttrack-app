@@ -15,10 +15,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Shop Setup (SHOP)
 
-- [ ] **SHOP-01**: Owner can set shop name, address, and contact details
+- [x] **SHOP-01**: Owner can set shop name, address, and contact details
 - [ ] **SHOP-02**: Owner can upload a shop logo used throughout the app and all customer communications
 - [ ] **SHOP-03**: Owner can set a custom brand color applied to the app UI and customer portal
-- [ ] **SHOP-04**: Owner can subscribe to MountTrack with a flat monthly fee via Stripe Billing
+- [x] **SHOP-04**: Owner can subscribe to MountTrack with a flat monthly fee via Stripe Billing
 - [ ] **SHOP-05**: Owner dashboard supports dark mode and light mode with a manual toggle
 
 ### Job Intake (INTAKE)
@@ -182,10 +182,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-01 | Phase 1 | Complete |
 | AUTH-02 | Phase 1 | Complete |
 | AUTH-03 | Phase 1 | Pending |
-| SHOP-01 | Phase 1 | Pending |
+| SHOP-01 | Phase 1 | Complete |
 | SHOP-02 | Phase 1 | Pending |
 | SHOP-03 | Phase 1 | Pending |
-| SHOP-04 | Phase 1 | Pending |
+| SHOP-04 | Phase 1 | Complete |
 | SHOP-05 | Phase 1 | Pending |
 | INTAKE-01 | Phase 2 | Pending |
 | INTAKE-02 | Phase 2 | Pending |
