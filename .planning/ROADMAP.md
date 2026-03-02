@@ -38,7 +38,7 @@ Plans:
 - [x] 01-01-PLAN.md — Project scaffold, Supabase schema + RLS, Stripe client, proxy.ts auth gate
 - [x] 01-02-PLAN.md — Auth pages (signup, login, forgot-password, update-password) + PKCE confirm route
 - [x] 01-03-PLAN.md — Onboarding wizard (shop setup + Stripe Checkout) + webhook handler
-- [ ] 01-04-PLAN.md — Dashboard shell, settings pages (Shop/Branding/Subscription), logo upload, brand color, dark mode
+- [x] 01-04-PLAN.md — Dashboard shell, settings pages (Shop/Branding/Subscription), logo upload, brand color, dark mode
 
 ### Phase 2: Job Intake & Board
 **Goal**: The owner can create a job with all required fields, see every active job on a visual Kanban board, and move jobs between stages.
@@ -117,7 +117,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 3/4 | In Progress|  |
+| 1. Foundation | 4/4 | Checkpoint Pending | 2026-03-02 |
 | 2. Job Intake & Board | 0/TBD | Not started | - |
 | 3. Job Detail, Views & Search | 0/TBD | Not started | - |
 | 4. Customer Portal | 0/TBD | Not started | - |

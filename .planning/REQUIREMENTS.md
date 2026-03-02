@@ -16,10 +16,10 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Shop Setup (SHOP)
 
 - [x] **SHOP-01**: Owner can set shop name, address, and contact details
-- [ ] **SHOP-02**: Owner can upload a shop logo used throughout the app and all customer communications
-- [ ] **SHOP-03**: Owner can set a custom brand color applied to the app UI and customer portal
+- [x] **SHOP-02**: Owner can upload a shop logo used throughout the app and all customer communications
+- [x] **SHOP-03**: Owner can set a custom brand color applied to the app UI and customer portal
 - [x] **SHOP-04**: Owner can subscribe to MountTrack with a flat monthly fee via Stripe Billing
-- [ ] **SHOP-05**: Owner dashboard supports dark mode and light mode with a manual toggle
+- [x] **SHOP-05**: Owner dashboard supports dark mode and light mode with a manual toggle
 
 ### Job Intake (INTAKE)
 
