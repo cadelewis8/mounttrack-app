@@ -32,9 +32,18 @@ export interface Database {
     Tables: {
       shops: {
         Row: Shop
-        Insert: Omit<Shop, 'created_at' | 'updated_at'>
+        // brand_color, onboarding_step have DB defaults so optional on Insert
+        Insert: Omit<Shop, 'created_at' | 'updated_at' | 'brand_color' | 'onboarding_step'> & {
+          brand_color?: string
+          onboarding_step?: number
+        }
         Update: Partial<Omit<Shop, 'id' | 'created_at'>>
+        Relationships: []
       }
     }
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    Views: {}
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    Functions: {}
   }
 }
