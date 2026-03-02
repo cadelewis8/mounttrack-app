@@ -2,7 +2,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export async function signUp(formData: FormData) {
+type AuthState = { error: string } | undefined
+
+export async function signUp(_prevState: AuthState, formData: FormData): Promise<AuthState> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
@@ -20,7 +22,7 @@ export async function signUp(formData: FormData) {
   redirect('/check-email')
 }
 
-export async function signIn(formData: FormData) {
+export async function signIn(_prevState: AuthState, formData: FormData): Promise<AuthState> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
@@ -39,7 +41,7 @@ export async function signOut() {
   redirect('/login')
 }
 
-export async function forgotPassword(formData: FormData) {
+export async function forgotPassword(_prevState: AuthState, formData: FormData): Promise<AuthState> {
   const email = formData.get('email') as string
 
   const supabase = await createClient()
@@ -53,7 +55,7 @@ export async function forgotPassword(formData: FormData) {
   redirect('/forgot-password?sent=true')
 }
 
-export async function updatePassword(formData: FormData) {
+export async function updatePassword(_prevState: AuthState, formData: FormData): Promise<AuthState> {
   const password = formData.get('password') as string
   const confirmPassword = formData.get('confirmPassword') as string
 
