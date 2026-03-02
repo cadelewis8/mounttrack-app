@@ -35,8 +35,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffold, Supabase schema + RLS, Stripe client, proxy.ts auth gate
-- [ ] 01-02-PLAN.md — Auth pages (signup, login, forgot-password, update-password) + PKCE confirm route
+- [x] 01-01-PLAN.md — Project scaffold, Supabase schema + RLS, Stripe client, proxy.ts auth gate
+- [x] 01-02-PLAN.md — Auth pages (signup, login, forgot-password, update-password) + PKCE confirm route
 - [ ] 01-03-PLAN.md — Onboarding wizard (shop setup + Stripe Checkout) + webhook handler
 - [ ] 01-04-PLAN.md — Dashboard shell, settings pages (Shop/Branding/Subscription), logo upload, brand color, dark mode
 
@@ -117,7 +117,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/4 | In Progress|  |
+| 1. Foundation | 2/4 | In Progress|  |
 | 2. Job Intake & Board | 0/TBD | Not started | - |
 | 3. Job Detail, Views & Search | 0/TBD | Not started | - |
 | 4. Customer Portal | 0/TBD | Not started | - |

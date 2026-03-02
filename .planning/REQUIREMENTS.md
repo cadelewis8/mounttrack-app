@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **AUTH-01**: Owner can create a shop account with email and password
 - [x] **AUTH-02**: Owner can log in and stay logged in across browser sessions
-- [ ] **AUTH-03**: Owner can reset password via email link
+- [x] **AUTH-03**: Owner can reset password via email link
 
 ### Shop Setup (SHOP)
 

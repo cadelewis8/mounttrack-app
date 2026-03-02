@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-02T23:07:50.918Z"
+last_updated: "2026-03-02T23:11:38Z"
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -23,34 +23,35 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 1 of 7 (Foundation)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-03-02 — Completed 01-01 scaffold
+Last activity: 2026-03-02 — Completed 01-02 auth pages and Server Actions
 
-Progress: [█░░░░░░░░░] 4% (1 of 28 estimated total plans)
+Progress: [██░░░░░░░░] 7% (2 of 28 estimated total plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 10 min
-- Total execution time: 0.17 hours
+- Total plans completed: 2
+- Average duration: 6 min
+- Total execution time: 0.20 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 1 | 10 min | 10 min |
+| 01-foundation | 2 | 12 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 10 min
-- Trend: Baseline established
+- Last 5 plans: 10 min, 2 min
+- Trend: Fast execution on auth pages (thin layer over established scaffold)
 
 *Updated after each plan completion*
 
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 01-foundation P01 | 10 min | 2 tasks | 17 files |
+| Phase 01-foundation P02 | 2 min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,9 @@ Recent decisions affecting current work:
 - No Stripe Connect in v1 — all customer payments route through MountTrack's platform Stripe account
 - [Phase 01-foundation]: src/proxy.ts with exported proxy function (not middleware.ts) — Next.js 16 proxy API pattern
 - [Phase 01-foundation]: getClaims() returns { claims } (JWT payload) not { user } — use claims.sub as userId in server-side auth checks
+- [Phase 01-foundation P02]: Server Actions use (prevState, formData) two-parameter signature — required by useActionState in React 19
+- [Phase 01-foundation P02]: /auth/confirm placed outside (auth) route group — Supabase email links must bypass the auth gate
+- [Phase 01-foundation P02]: forgotPassword always returns same response regardless of email existence — prevents enumeration
 
 ### Pending Todos
 
@@ -80,5 +84,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 01-foundation-01-PLAN.md — next is 01-02 (auth pages)
+Stopped at: Completed 01-foundation-02-PLAN.md — next is 01-03 (onboarding wizard)
 Resume file: None
