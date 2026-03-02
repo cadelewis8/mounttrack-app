@@ -1,0 +1,65 @@
+# Project State
+
+## Project Reference
+
+See: .planning/PROJECT.md (updated 2026-03-01)
+
+**Core value:** A taxidermy shop owner can intake a job, drag it through production stages, and have the customer automatically kept informed and able to pay — without the owner picking up the phone.
+**Current focus:** Phase 1 — Foundation
+
+## Current Position
+
+Phase: 1 of 7 (Foundation)
+Plan: 0 of TBD in current phase
+Status: Ready to plan
+Last activity: 2026-03-01 — Roadmap created
+
+Progress: [░░░░░░░░░░] 0%
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed: 0
+- Average duration: —
+- Total execution time: 0 hours
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
+
+**Recent Trend:**
+- Last 5 plans: —
+- Trend: —
+
+*Updated after each plan completion*
+
+## Accumulated Context
+
+### Decisions
+
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
+
+- Multi-tenant SaaS enforced at DB level via Supabase RLS — must be established in Phase 1 before any feature work
+- Dual Stripe flows (shop subscriptions via Billing + customer payments via Payment Intents) must be discriminated by metadata to avoid webhook corruption
+- Customer portal uses token-only access (no login) — 32-byte crypto random token in URL
+- Flat monthly subscription for shop owners (not per-job billing)
+- No Stripe Connect in v1 — all customer payments route through MountTrack's platform Stripe account
+
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+- Twilio A2P 10DLC registration must be initiated at project kickoff — takes 2-4 weeks; blocks Phase 6 SMS delivery in production
+- All package versions in stack research are based on August 2025 training data — verify against official releases before `npm install`
+- Stripe Connect timing: confirm v1 platform-collects model is acceptable before Phase 5 planning; if shops need direct payouts from day one, Phase 3 scope changes
+
+## Session Continuity
+
+Last session: 2026-03-01
+Stopped at: Roadmap created — ready to plan Phase 1
+Resume file: None
