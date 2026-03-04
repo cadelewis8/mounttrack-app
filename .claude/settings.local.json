@@ -5,7 +5,9 @@
       "Skill(gsd:plan-phase)",
       "WebSearch",
       "Skill(gsd:progress)",
-      "Skill(gsd:execute-phase)"
+      "Skill(gsd:execute-phase)",
+      "Bash(ls:*)",
+      "Bash(grep:*)"
     ]
   }
 }
