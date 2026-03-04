@@ -101,7 +101,7 @@ Each task was committed atomically:
 1. **Task 1: Dashboard shell, settings pages, and branding components** - `8e4bf62` (feat)
 2. **Task 2: Logo upload and branding settings page** - `b6e0101` (feat)
 
-**Plan metadata:** (pending — awaiting checkpoint verification)
+**Plan metadata:** `dd0cdac` (docs: complete plan)
 
 ## Files Created/Modified
 - `mounttrack/src/app/(app)/layout.tsx` - Dashboard shell with sidebar, brand color CSS variable, theme toggle

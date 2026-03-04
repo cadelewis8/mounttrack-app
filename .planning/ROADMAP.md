@@ -12,7 +12,7 @@ MountTrack ships in seven phases, each delivering a coherent, independently veri
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Auth, shop setup, subscription billing, and the multi-tenant security model
+- [x] **Phase 1: Foundation** - Auth, shop setup, subscription billing, and the multi-tenant security model
 - [ ] **Phase 2: Job Intake & Board** - Job creation with all intake fields, visual Kanban stage board with drag-and-drop
 - [ ] **Phase 3: Job Detail, Views & Search** - Job detail page, queue and calendar views, search and filters
 - [ ] **Phase 4: Customer Portal** - Token-gated no-login portal showing job status, photos, and branded shop identity
@@ -117,7 +117,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 4/4 | Checkpoint Pending | 2026-03-02 |
+| 1. Foundation | 4/4 | Complete | 2026-03-04 |
 | 2. Job Intake & Board | 0/TBD | Not started | - |
 | 3. Job Detail, Views & Search | 0/TBD | Not started | - |
 | 4. Customer Portal | 0/TBD | Not started | - |
