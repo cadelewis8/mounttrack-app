@@ -50,7 +50,14 @@ Plans:
   3. Owner can drag a job card to a different stage column and the board updates immediately
   4. Owner can customize stages for their shop — add, rename, and reorder — with sensible defaults pre-loaded (Skinning, Fleshing, Tanning, Mounting, Finishing, Ready for Pickup)
   5. Rush jobs show a visual rush indicator; jobs past their estimated completion date show a distinct overdue indicator
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Supabase migration (stages, jobs, job_number_seq tables + RLS + triggers) + TypeScript types
+- [ ] 02-02-PLAN.md — Job intake form (/jobs/new), server actions (createJob, photo signed URLs), dnd-kit + react-dropzone install
+- [ ] 02-03-PLAN.md — Kanban board (/board): KanbanBoard, KanbanColumn, JobCard components with dnd-kit
+- [ ] 02-04-PLAN.md — Stage manager (/settings/stages): sortable CRUD list + stage server actions + Stages settings tab
+- [ ] 02-05-PLAN.md — Sidebar nav wiring (Board + New Job links), dashboard redirect, bulk select toolbar + human verification
 
 ### Phase 3: Job Detail, Views & Search
 **Goal**: The owner has full access to every piece of job information, can manage job records over their lifecycle, and can find any job instantly via search and filtering.
@@ -118,7 +125,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete | 2026-03-04 |
-| 2. Job Intake & Board | 0/TBD | Not started | - |
+| 2. Job Intake & Board | 0/5 | Not started | - |
 | 3. Job Detail, Views & Search | 0/TBD | Not started | - |
 | 4. Customer Portal | 0/TBD | Not started | - |
 | 5. Payments | 0/TBD | Not started | - |
