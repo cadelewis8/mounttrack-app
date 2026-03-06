@@ -2,8 +2,8 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useTransition } from 'react'
-import { Zap } from 'lucide-react'
-import { toggleJobRush } from '@/actions/jobs'
+import { Zap, Trash2 } from 'lucide-react'
+import { toggleJobRush, deleteJob } from '@/actions/jobs'
 import type { Job } from '@/types/database'
 
 interface JobCardProps {
@@ -11,9 +11,10 @@ interface JobCardProps {
   isOverlay?: boolean
   isSelected?: boolean
   onToggleSelect?: (jobId: string) => void
+  onDelete?: (jobId: string) => void
 }
 
-export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardProps) {
+export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }: JobCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: job.id })
 
@@ -33,9 +34,18 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardP
     : ''
 
   function handleRushToggle(e: React.MouseEvent) {
-    e.stopPropagation()  // Prevent drag start
+    e.stopPropagation()
     startTransition(async () => {
       await toggleJobRush(job.id, !job.is_rush)
+    })
+  }
+
+  function handleDelete(e: React.MouseEvent) {
+    e.stopPropagation()
+    if (!confirm(`Delete job #${String(job.job_number).padStart(4, '0')} for ${job.customer_name}?`)) return
+    onDelete?.(job.id)
+    startTransition(async () => {
+      await deleteJob(job.id)
     })
   }
 
@@ -67,16 +77,30 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardP
           {formattedDate} · {jobNumberFormatted}
         </p>
 
-        {/* Rush toggle button — activationConstraint distance:5 ensures this click works */}
-        <button
-          type="button"
-          onClick={handleRushToggle}
-          title={job.is_rush ? 'Remove rush flag' : 'Mark as rush'}
-          className={`p-0.5 rounded transition-colors hover:bg-muted
-            ${job.is_rush ? 'text-amber-400' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
-        >
-          <Zap className="h-3.5 w-3.5" fill={job.is_rush ? 'currentColor' : 'none'} />
-        </button>
+        <div className="flex items-center gap-0.5">
+          {/* Rush toggle */}
+          <button
+            type="button"
+            onClick={handleRushToggle}
+            title={job.is_rush ? 'Remove rush flag' : 'Mark as rush'}
+            className={`p-0.5 rounded transition-colors hover:bg-muted
+              ${job.is_rush ? 'text-amber-400' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
+          >
+            <Zap className="h-3.5 w-3.5" fill={job.is_rush ? 'currentColor' : 'none'} />
+          </button>
+
+          {/* Delete — visible on card hover */}
+          {!isOverlay && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              title="Delete job"
+              className="p-0.5 rounded transition-colors text-muted-foreground/40 hover:text-red-500 hover:bg-muted"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Bulk select checkbox — shown when onToggleSelect is provided */}

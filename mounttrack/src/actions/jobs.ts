@@ -151,3 +151,19 @@ export async function bulkMoveJobs(jobIds: string[], stageId: string): Promise<{
   if (error) return { error: error.message }
   return {}
 }
+
+export async function deleteJob(jobId: string): Promise<{ error?: string }> {
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getClaims()
+  const userId = data?.claims?.sub ?? null
+  if (!userId) return { error: 'Not authenticated' }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase.from('jobs') as any)
+    .delete()
+    .eq('id', jobId)
+    .eq('shop_id', userId) as { error: { message: string } | null }
+
+  if (error) return { error: error.message }
+  return {}
+}

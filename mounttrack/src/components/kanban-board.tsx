@@ -111,6 +111,21 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
     })
   }
 
+  function handleDelete(jobId: string) {
+    setJobsByStage((prev) => {
+      const next = { ...prev }
+      for (const stageId of Object.keys(next)) {
+        next[stageId] = next[stageId].filter((j) => j.id !== jobId)
+      }
+      return next
+    })
+    setSelectedJobIds((prev) => {
+      const next = new Set(prev)
+      next.delete(jobId)
+      return next
+    })
+  }
+
   return (
     <DndContext
       sensors={sensors}
@@ -181,6 +196,7 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
               jobs={jobsByStage[stage.id] ?? []}
               selectedJobIds={selectedJobIds}
               onToggleSelect={toggleSelect}
+              onDelete={handleDelete}
             />
           ))}
         </div>

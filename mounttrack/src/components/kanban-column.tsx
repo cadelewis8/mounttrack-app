@@ -9,9 +9,10 @@ interface KanbanColumnProps {
   jobs: Job[]
   selectedJobIds: Set<string>
   onToggleSelect: (jobId: string) => void
+  onDelete: (jobId: string) => void
 }
 
-export function KanbanColumn({ stage, jobs, selectedJobIds, onToggleSelect }: KanbanColumnProps) {
+export function KanbanColumn({ stage, jobs, selectedJobIds, onToggleSelect, onDelete }: KanbanColumnProps) {
   // useDroppable makes this column a valid drop zone even when SortableContext items is empty
   // Without this, empty columns cannot receive dropped cards (see research pitfall #2)
   const { setNodeRef } = useDroppable({ id: stage.id })
@@ -37,6 +38,7 @@ export function KanbanColumn({ stage, jobs, selectedJobIds, onToggleSelect }: Ka
               job={job}
               isSelected={selectedJobIds.has(job.id)}
               onToggleSelect={onToggleSelect}
+              onDelete={onDelete}
             />
           ))}
         </SortableContext>
