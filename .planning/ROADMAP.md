@@ -53,7 +53,7 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Supabase migration (stages, jobs, job_number_seq tables + RLS + triggers) + TypeScript types
+- [x] 02-01-PLAN.md — Supabase migration (stages, jobs, job_number_seq tables + RLS + triggers) + TypeScript types
 - [ ] 02-02-PLAN.md — Job intake form (/jobs/new), server actions (createJob, photo signed URLs), dnd-kit + react-dropzone install
 - [ ] 02-03-PLAN.md — Kanban board (/board): KanbanBoard, KanbanColumn, JobCard components with dnd-kit
 - [ ] 02-04-PLAN.md — Stage manager (/settings/stages): sortable CRUD list + stage server actions + Stages settings tab
@@ -125,7 +125,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete | 2026-03-04 |
-| 2. Job Intake & Board | 0/5 | Not started | - |
+| 2. Job Intake & Board | 1/5 | In progress | - |
 | 3. Job Detail, Views & Search | 0/TBD | Not started | - |
 | 4. Customer Portal | 0/TBD | Not started | - |
 | 5. Payments | 0/TBD | Not started | - |

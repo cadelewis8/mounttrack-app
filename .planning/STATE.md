@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-03-04T16:01:10.171Z"
+status: in_progress
+last_updated: "2026-03-06T04:03:56Z"
 progress:
-  total_phases: 1
+  total_phases: 7
   completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 29
+  completed_plans: 5
 ---
 
 # Project State
@@ -18,33 +18,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-01)
 
 **Core value:** A taxidermy shop owner can intake a job, drag it through production stages, and have the customer automatically kept informed and able to pay — without the owner picking up the phone.
-**Current focus:** Phase 1 — Foundation (awaiting human verification checkpoint)
+**Current focus:** Phase 2 — Job Intake Board (in progress)
 
 ## Current Position
 
-Phase: 1 of 7 (Foundation) — COMPLETE
-Plan: 4 of 4 in current phase — VERIFIED AND COMPLETE
-Status: Phase 1 complete — ready for Phase 2
-Last activity: 2026-03-04 — Human verification approved for 01-04 (all 14 checks passed)
+Phase: 2 of 7 (Job Intake Board) — IN PROGRESS
+Plan: 1 of 5 in current phase — COMPLETE
+Status: 02-01 complete — schema and TypeScript types established; plans 02-02 to 02-05 can proceed
+Last activity: 2026-03-06 — 02-01 complete (migration + TypeScript types)
 
-Progress: [████░░░░░░] 14% (4 of 28 estimated total plans) — Phase 1 verified complete
+Progress: [████░░░░░░] 17% (5 of 29 estimated total plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 8 min
-- Total execution time: 0.52 hours
+- Total plans completed: 5
+- Average duration: 7 min
+- Total execution time: 0.60 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 4 | 37 min | 9 min |
+| 02-job-intake-board | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 10 min, 2 min, 10 min, 15 min
-- Trend: Consistent execution; type compatibility fixes recurring theme
+- Last 5 plans: 10 min, 2 min, 10 min, 15 min, 5 min
+- Trend: Consistent execution; schema/types plans faster than UI plans
 
 *Updated after each plan completion*
 
@@ -54,6 +55,7 @@ Progress: [████░░░░░░] 14% (4 of 28 estimated total plans) �
 | Phase 01-foundation P02 | 2 min | 2 tasks | 8 files |
 | Phase 01-foundation P03 | 10 min | 2 tasks | 10 files |
 | Phase 01-foundation P04 | 15 min | 2 tasks | 15 files |
+| Phase 02-job-intake-board P01 | 5 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -78,6 +80,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundation P04]: Client component wrappers (ShopSettingsForm, BrandingForm, BillingPortalButton) used for forms needing useActionState — keeps Server Component pages while supporting React 19 form state
 - [Phase 01-foundation P04]: ThemeToggle renders placeholder before mount (useEffect + mounted state) — avoids hydration mismatch with next-themes SSR
 - [Phase 01-foundation P04]: next.config.ts remotePatterns required for *.supabase.co — next/image won't load external URLs without this
+- [Phase 02-job-intake-board P01]: get_next_job_number uses SECURITY DEFINER — counter write must bypass RLS insert policy
+- [Phase 02-job-intake-board P01]: seed_default_stages trigger is SECURITY DEFINER — fires as postgres role so stages can be inserted before shop owner's RLS session is established
+- [Phase 02-job-intake-board P01]: stage_id FK on jobs uses ON DELETE RESTRICT — stages with jobs cannot be deleted, prevents orphaned jobs
+- [Phase 02-job-intake-board P01]: is_overdue is TypeScript-only optional field — computed at application layer, not stored in DB
 
 ### Pending Todos
 
@@ -91,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-02
-Stopped at: Phase 1 complete — all 4 plans executed and human-verified
+Last session: 2026-03-06
+Stopped at: Completed 02-01-PLAN.md — Phase 2 data layer established
 Resume file: None
