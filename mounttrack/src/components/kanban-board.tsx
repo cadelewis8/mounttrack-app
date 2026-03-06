@@ -4,6 +4,7 @@ import {
   useSensor, useSensors, PointerSensor, KeyboardSensor,
   type DragStartEvent, type DragOverEvent, type DragEndEvent,
 } from '@dnd-kit/core'
+import { arrayMove } from '@dnd-kit/sortable'
 import { useState, useTransition } from 'react'
 import { KanbanColumn } from './kanban-column'
 import { JobCard } from './job-card'
@@ -33,6 +34,7 @@ function findJob(jobId: string, jobsByStage: Record<string, Job[]>): Job | undef
 export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
   const [jobsByStage, setJobsByStage] = useState(initialJobsByStage)
   const [activeJobId, setActiveJobId] = useState<string | null>(null)
+  const [activeJobOriginStage, setActiveJobOriginStage] = useState<string | null>(null)
   const [, startTransition] = useTransition()
 
   // activationConstraint distance:5 prevents button clicks in cards from starting a drag
@@ -42,19 +44,34 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
   )
 
   function onDragStart({ active }: DragStartEvent) {
-    setActiveJobId(active.id as string)
+    const id = active.id as string
+    setActiveJobId(id)
+    setActiveJobOriginStage(findStageForJob(id, jobsByStage) ?? null)
   }
 
   function onDragOver({ active, over }: DragOverEvent) {
     if (!over) return
-    const fromStage = findStageForJob(active.id as string, jobsByStage)
+    const activeId = active.id as string
     const overId = over.id as string
-    // over.id could be a job id (card) or stage id (droppable zone)
+    const fromStage = findStageForJob(activeId, jobsByStage)
     const toStage = findStageForJob(overId, jobsByStage) ?? overId
-    if (!fromStage || fromStage === toStage) return
+    if (!fromStage) return
 
+    if (fromStage === toStage) {
+      // Reorder within the same column
+      setJobsByStage((prev) => {
+        const jobs = prev[fromStage]
+        const oldIndex = jobs.findIndex((j) => j.id === activeId)
+        const newIndex = jobs.findIndex((j) => j.id === overId)
+        if (oldIndex === -1 || newIndex === -1) return prev
+        return { ...prev, [fromStage]: arrayMove(jobs, oldIndex, newIndex) }
+      })
+      return
+    }
+
+    // Move to a different column
     setJobsByStage((prev) => {
-      const job = findJob(active.id as string, prev)
+      const job = findJob(activeId, prev)
       if (!job) return prev
       return {
         ...prev,
@@ -70,10 +87,13 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
     const overId = over.id as string
     const toStage = findStageForJob(overId, jobsByStage) ?? overId
 
-    // Persist to DB in a transition — optimistic state already applied in onDragOver
-    startTransition(async () => {
-      await updateJobStage(active.id as string, toStage)
-    })
+    // Only persist to DB when the job moved to a different column
+    if (activeJobOriginStage && activeJobOriginStage !== toStage) {
+      startTransition(async () => {
+        await updateJobStage(active.id as string, toStage)
+      })
+    }
+    setActiveJobOriginStage(null)
   }
 
   const activeJob = activeJobId ? findJob(activeJobId, jobsByStage) : null
