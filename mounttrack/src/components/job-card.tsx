@@ -1,7 +1,7 @@
 'use client'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { Zap, Trash2 } from 'lucide-react'
 import { toggleJobRush, deleteJob } from '@/actions/jobs'
 import type { Job } from '@/types/database'
@@ -18,6 +18,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: job.id })
 
+  const [isRush, setIsRush] = useState(job.is_rush)
   const [, startTransition] = useTransition()
 
   const style = {
@@ -29,14 +30,16 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
   // Overdue takes priority over rush (red > orange)
   const borderClass = job.is_overdue
     ? 'border-l-4 border-l-red-600'
-    : job.is_rush
+    : isRush
     ? 'border-l-4 border-l-amber-400'
     : ''
 
   function handleRushToggle(e: React.MouseEvent) {
     e.stopPropagation()
+    const next = !isRush
+    setIsRush(next)
     startTransition(async () => {
-      await toggleJobRush(job.id, !job.is_rush)
+      await toggleJobRush(job.id, next)
     })
   }
 
@@ -82,11 +85,11 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
           <button
             type="button"
             onClick={handleRushToggle}
-            title={job.is_rush ? 'Remove rush flag' : 'Mark as rush'}
+            title={isRush ? 'Remove rush flag' : 'Mark as rush'}
             className={`p-0.5 rounded transition-colors hover:bg-muted
-              ${job.is_rush ? 'text-amber-400' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
+              ${isRush ? 'text-amber-400' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
           >
-            <Zap className="h-3.5 w-3.5" fill={job.is_rush ? 'currentColor' : 'none'} />
+            <Zap className="h-3.5 w-3.5" fill={isRush ? 'currentColor' : 'none'} />
           </button>
 
           {/* Delete — visible on card hover */}
