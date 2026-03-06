@@ -63,6 +63,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
       ref={setNodeRef}
       style={isOverlay ? {} : style}
       {...(isOverlay ? {} : { ...attributes, ...listeners })}
+      suppressHydrationWarning
       className={`rounded-md bg-card border p-3 cursor-grab shadow-sm select-none
         ${borderClass}
         ${isSelected ? 'ring-2 ring-[var(--brand)]' : ''}
