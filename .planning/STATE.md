@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-06T13:57:57.074Z"
+last_updated: "2026-03-06T14:02:22.619Z"
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 9
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -57,6 +57,7 @@ Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
 | Phase 01-foundation P04 | 15 min | 2 tasks | 15 files |
 | Phase 02-job-intake-board P01 | 5 min | 2 tasks | 2 files |
 | Phase 02-job-intake-board P04 | 3 min | 2 tasks | 5 files |
+| Phase 02-job-intake-board P02 | 6 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,9 @@ Recent decisions affecting current work:
 - [Phase 02-job-intake-board]: dnd-kit listeners on grip handle only so rename/delete buttons remain clickable without triggering drag
 - [Phase 02-job-intake-board]: deleteStage guards: stageCount <= 1 blocks last-stage delete, jobCount > 0 blocks delete of occupied stage
 - [Phase 02-job-intake-board]: Settings page pattern: Server Component page + use client manager child component receiving initialX prop
+- [Phase 02-job-intake-board]: PhotoUploadZone uses forwardRef + useImperativeHandle to expose uploadAll — canonical pattern for imperative async APIs from child components
+- [Phase 02-job-intake-board]: Zod v4 + zodResolver: remove .default() from boolean schema fields, use defaultValues in useForm; use z.string().refine() for numeric fields to avoid unknown inference
+- [Phase 02-job-intake-board]: supabase.rpc() cast as (supabase as any).rpc() with explicit return type — same GenericSchema workaround as supabase.from() as any
 
 ### Pending Todos
 

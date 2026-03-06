@@ -23,14 +23,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Job Intake (INTAKE)
 
-- [ ] **INTAKE-01**: Owner can create a job with customer name, phone, and email
-- [ ] **INTAKE-02**: Owner can select animal type from a predefined list (deer, fish, turkey, bear, bird, etc.) or add a custom type
-- [ ] **INTAKE-03**: Owner can specify mount style (shoulder, full body, European, fish panel, etc.)
+- [x] **INTAKE-01**: Owner can create a job with customer name, phone, and email
+- [x] **INTAKE-02**: Owner can select animal type from a predefined list (deer, fish, turkey, bear, bird, etc.) or add a custom type
+- [x] **INTAKE-03**: Owner can specify mount style (shoulder, full body, European, fish panel, etc.)
 - [ ] **INTAKE-04**: Each job is automatically assigned a unique job number at creation
-- [ ] **INTAKE-05**: Owner can record quoted price and deposit amount at intake
-- [ ] **INTAKE-06**: Owner can set an estimated completion date at intake
-- [ ] **INTAKE-07**: Owner can select a referral source at intake (Facebook, Google, word of mouth, walk-in, other) or add a custom source
-- [ ] **INTAKE-08**: Owner can upload photos at intake
+- [x] **INTAKE-05**: Owner can record quoted price and deposit amount at intake
+- [x] **INTAKE-06**: Owner can set an estimated completion date at intake
+- [x] **INTAKE-07**: Owner can select a referral source at intake (Facebook, Google, word of mouth, walk-in, other) or add a custom source
+- [x] **INTAKE-08**: Owner can upload photos at intake
 
 ### Job Board & Stages (BOARD)
 
@@ -120,7 +120,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Social Media Consent (SOCIAL)
 
-- [ ] **SOCIAL-01**: Job intake form includes a checkbox for the customer to opt-in to allowing the shop to share photos of their finished mount on social media
+- [x] **SOCIAL-01**: Job intake form includes a checkbox for the customer to opt-in to allowing the shop to share photos of their finished mount on social media
 - [ ] **SOCIAL-02**: Photo sharing opt-in status is visible on the job detail page and on any uploaded photos flagged as shareable
 
 ---
@@ -187,14 +187,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHOP-03 | Phase 1 | Pending |
 | SHOP-04 | Phase 1 | Complete |
 | SHOP-05 | Phase 1 | Pending |
-| INTAKE-01 | Phase 2 | Pending |
-| INTAKE-02 | Phase 2 | Pending |
-| INTAKE-03 | Phase 2 | Pending |
+| INTAKE-01 | Phase 2 | Complete |
+| INTAKE-02 | Phase 2 | Complete |
+| INTAKE-03 | Phase 2 | Complete |
 | INTAKE-04 | Phase 2 | Pending |
-| INTAKE-05 | Phase 2 | Pending |
-| INTAKE-06 | Phase 2 | Pending |
-| INTAKE-07 | Phase 2 | Pending |
-| INTAKE-08 | Phase 2 | Pending |
+| INTAKE-05 | Phase 2 | Complete |
+| INTAKE-06 | Phase 2 | Complete |
+| INTAKE-07 | Phase 2 | Complete |
+| INTAKE-08 | Phase 2 | Complete |
 | BOARD-01 | Phase 2 | Pending |
 | BOARD-02 | Phase 2 | Pending |
 | BOARD-03 | Phase 2 | Complete |
@@ -245,7 +245,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POST-04 | Phase 7 | Pending |
 | POST-05 | Phase 7 | Pending |
 | DOC-01 | Phase 7 | Pending |
-| SOCIAL-01 | Phase 2 | Pending |
+| SOCIAL-01 | Phase 2 | Complete |
 | SOCIAL-02 | Phase 3 | Pending |
 
 **Coverage:**
