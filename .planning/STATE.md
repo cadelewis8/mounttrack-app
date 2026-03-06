@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-06T14:02:22.619Z"
+last_updated: "2026-03-06T14:21:43.724Z"
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 2 of 7 (Job Intake Board) — IN PROGRESS
-Plan: 4 of 5 in current phase — COMPLETE
-Status: 02-04 complete — Stage Manager at /settings/stages with full CRUD; 02-05 (Kanban board) remaining
-Last activity: 2026-03-06 — 02-04 complete (stage manager + dnd-kit sortable)
+Plan: 3 of 5 in current phase — COMPLETE
+Status: 02-03 complete — Kanban board at /board with dnd-kit drag-and-drop; 02-05 remaining
+Last activity: 2026-03-06 — 02-03 complete (Kanban board, KanbanBoard/KanbanColumn/JobCard components)
 
 Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
 
@@ -58,6 +58,7 @@ Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
 | Phase 02-job-intake-board P01 | 5 min | 2 tasks | 2 files |
 | Phase 02-job-intake-board P04 | 3 min | 2 tasks | 5 files |
 | Phase 02-job-intake-board P02 | 6 min | 2 tasks | 5 files |
+| Phase 02-job-intake-board P03 | 9 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,10 @@ Recent decisions affecting current work:
 - [Phase 02-job-intake-board]: PhotoUploadZone uses forwardRef + useImperativeHandle to expose uploadAll — canonical pattern for imperative async APIs from child components
 - [Phase 02-job-intake-board]: Zod v4 + zodResolver: remove .default() from boolean schema fields, use defaultValues in useForm; use z.string().refine() for numeric fields to avoid unknown inference
 - [Phase 02-job-intake-board]: supabase.rpc() cast as (supabase as any).rpc() with explicit return type — same GenericSchema workaround as supabase.from() as any
+- [Phase 02-job-intake-board]: is_overdue computed in SQL at query time (estimated_completion_date < now()::date) for server clock accuracy
+- [Phase 02-job-intake-board]: useDroppable on column container required for empty columns to accept drops — SortableContext alone insufficient
+- [Phase 02-job-intake-board]: PointerSensor activationConstraint distance:5 allows button clicks in cards without triggering drag
+- [Phase 02-job-intake-board]: Bulk select state lifted into KanbanBoard — ready for Plan 05 toolbar without refactor
 
 ### Pending Todos
 
@@ -106,5 +111,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 02-04-PLAN.md — Stage Manager at /settings/stages
+Stopped at: Completed 02-03-PLAN.md — Kanban board at /board with dnd-kit drag-and-drop
 Resume file: None

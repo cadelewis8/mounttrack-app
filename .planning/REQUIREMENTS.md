@@ -34,13 +34,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Job Board & Stages (BOARD)
 
-- [ ] **BOARD-01**: Owner can view all active jobs on a visual Kanban stage board with one column per stage
-- [ ] **BOARD-02**: Owner can drag a job card between stage columns
+- [x] **BOARD-01**: Owner can view all active jobs on a visual Kanban stage board with one column per stage
+- [x] **BOARD-02**: Owner can drag a job card between stage columns
 - [x] **BOARD-03**: Owner can customize stages per shop — add, rename, and reorder (defaults: Skinning, Fleshing, Tanning, Mounting, Finishing, Ready for Pickup)
 - [ ] **BOARD-04**: Owner can bulk-select multiple job cards and move them all to a specified stage in one action
-- [ ] **BOARD-05**: Owner can mark a job as Rush — job card shows a visual rush indicator on the board
-- [ ] **BOARD-06**: Jobs that have passed their estimated completion date are automatically flagged as overdue with a distinct visual indicator on the board
-- [ ] **BOARD-07**: Each stage column displays the job count for that stage
+- [x] **BOARD-05**: Owner can mark a job as Rush — job card shows a visual rush indicator on the board
+- [x] **BOARD-06**: Jobs that have passed their estimated completion date are automatically flagged as overdue with a distinct visual indicator on the board
+- [x] **BOARD-07**: Each stage column displays the job count for that stage
 
 ### Queue & Calendar (QUEUE)
 
@@ -195,13 +195,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTAKE-06 | Phase 2 | Complete |
 | INTAKE-07 | Phase 2 | Complete |
 | INTAKE-08 | Phase 2 | Complete |
-| BOARD-01 | Phase 2 | Pending |
-| BOARD-02 | Phase 2 | Pending |
+| BOARD-01 | Phase 2 | Complete |
+| BOARD-02 | Phase 2 | Complete |
 | BOARD-03 | Phase 2 | Complete |
 | BOARD-04 | Phase 2 | Pending |
-| BOARD-05 | Phase 2 | Pending |
-| BOARD-06 | Phase 2 | Pending |
-| BOARD-07 | Phase 2 | Pending |
+| BOARD-05 | Phase 2 | Complete |
+| BOARD-06 | Phase 2 | Complete |
+| BOARD-07 | Phase 2 | Complete |
 | QUEUE-01 | Phase 3 | Pending |
 | QUEUE-02 | Phase 3 | Pending |
 | QUEUE-03 | Phase 3 | Pending |
