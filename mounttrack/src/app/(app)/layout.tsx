@@ -4,6 +4,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { signOut } from '@/actions/auth'
 import Image from 'next/image'
 import Link from 'next/link'
+import { LayoutGrid, Plus, Settings } from 'lucide-react'
 import type { Shop } from '@/types/database'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -48,15 +49,24 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {/* Navigation */}
         <nav className="flex-1 p-3 space-y-1">
           <Link
-            href="/dashboard"
+            href="/board"
             className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors"
           >
-            Dashboard
+            <LayoutGrid className="h-4 w-4" />
+            Board
+          </Link>
+          <Link
+            href="/jobs/new"
+            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            New Job
           </Link>
           <Link
             href="/settings/shop"
             className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors"
           >
+            <Settings className="h-4 w-4" />
             Settings
           </Link>
         </nav>

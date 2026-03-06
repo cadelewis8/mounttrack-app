@@ -7,7 +7,7 @@ import {
 import { useState, useTransition } from 'react'
 import { KanbanColumn } from './kanban-column'
 import { JobCard } from './job-card'
-import { updateJobStage } from '@/actions/jobs'
+import { updateJobStage, bulkMoveJobs } from '@/actions/jobs'
 import type { Stage, Job } from '@/types/database'
 
 interface KanbanBoardProps {
@@ -78,9 +78,9 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
 
   const activeJob = activeJobId ? findJob(activeJobId, jobsByStage) : null
 
-  // Bulk select state — lifted up for the toolbar in Plan 05
-  // For now just expose it as context; bulk select UI is added in Plan 05
+  // Bulk select state — lifted up for the toolbar
   const [selectedJobIds, setSelectedJobIds] = useState<Set<string>>(new Set())
+  const [bulkTargetStageId, setBulkTargetStageId] = useState('')
 
   function toggleSelect(jobId: string) {
     setSelectedJobIds((prev) => {
@@ -99,16 +99,60 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
     >
-      <div className="flex gap-4 overflow-x-auto h-full p-4 pb-0">
-        {stages.map((stage) => (
-          <KanbanColumn
-            key={stage.id}
-            stage={stage}
-            jobs={jobsByStage[stage.id] ?? []}
-            selectedJobIds={selectedJobIds}
-            onToggleSelect={toggleSelect}
-          />
-        ))}
+      <div className="flex flex-col h-full overflow-hidden">
+        {/* Bulk move toolbar — visible when one or more cards are selected */}
+        {selectedJobIds.size > 0 && (
+          <div className="px-4 py-2 border-b flex items-center gap-3 bg-muted/30">
+            <span className="text-sm text-muted-foreground">
+              {selectedJobIds.size} job{selectedJobIds.size !== 1 ? 's' : ''} selected
+            </span>
+            <select
+              value={bulkTargetStageId}
+              onChange={(e) => setBulkTargetStageId(e.target.value)}
+              className="text-sm border rounded px-2 py-1 bg-background"
+            >
+              <option value="">Move to stage...</option>
+              {stages.map((s) => (
+                <option key={s.id} value={s.id}>{s.name}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => {
+                if (!bulkTargetStageId) return
+                startTransition(async () => {
+                  await bulkMoveJobs([...selectedJobIds], bulkTargetStageId)
+                  setSelectedJobIds(new Set())
+                  setBulkTargetStageId('')
+                })
+              }}
+              disabled={!bulkTargetStageId}
+              className="text-sm px-3 py-1 rounded bg-[var(--brand)] text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
+            >
+              Move
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedJobIds(new Set())}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Clear
+            </button>
+          </div>
+        )}
+
+        {/* Columns scroll area */}
+        <div className="flex gap-4 overflow-x-auto h-full p-4 pb-0">
+          {stages.map((stage) => (
+            <KanbanColumn
+              key={stage.id}
+              stage={stage}
+              jobs={jobsByStage[stage.id] ?? []}
+              selectedJobIds={selectedJobIds}
+              onToggleSelect={toggleSelect}
+            />
+          ))}
+        </div>
       </div>
 
       <DragOverlay>
