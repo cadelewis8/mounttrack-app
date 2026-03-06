@@ -8,7 +8,7 @@ import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } 
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Trash2, Check, X } from 'lucide-react'
 import { useState, useTransition } from 'react'
-import { reorderStages, deleteStage, createStage, updateStage } from '@/actions/stages'
+import { reorderStages, deleteStage, createStage, updateStage, seedDefaultStages } from '@/actions/stages'
 import type { Stage } from '@/types/database'
 
 interface StageRowProps {
@@ -163,6 +163,14 @@ export function StageManager({ initialStages }: StageManagerProps) {
     setStages((prev) => prev.map((s) => s.id === stageId ? { ...s, name } : s))
   }
 
+  async function handleSeedDefaults() {
+    const result = await seedDefaultStages()
+    if (result?.error) {
+      setAddError(result.error)
+    }
+    // revalidatePath in the action will refresh server component with the new stages
+  }
+
   async function handleAdd() {
     setAddError(null)
     const name = newStageName.trim()
@@ -191,6 +199,19 @@ export function StageManager({ initialStages }: StageManagerProps) {
         <p className="text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 rounded px-3 py-2">
           {deleteError}
         </p>
+      )}
+
+      {stages.length === 0 && (
+        <div className="text-center py-6 border rounded-md bg-muted/30">
+          <p className="text-sm text-muted-foreground mb-3">No stages yet.</p>
+          <button
+            type="button"
+            onClick={handleSeedDefaults}
+            className="px-4 py-2 text-sm rounded bg-[var(--brand)] text-white hover:opacity-90 transition-opacity"
+          >
+            Load default taxidermy stages
+          </button>
+        </div>
       )}
 
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>

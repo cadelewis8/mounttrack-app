@@ -129,3 +129,22 @@ export async function reorderStages(orderedIds: string[]): Promise<{ error?: str
   revalidatePath('/board')
   return {}
 }
+
+const DEFAULT_STAGES = ['Skinning', 'Fleshing', 'Tanning', 'Mounting', 'Finishing', 'Ready for Pickup']
+
+export async function seedDefaultStages(): Promise<{ error?: string }> {
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getClaims()
+  const userId = data?.claims?.sub ?? null
+  if (!userId) return { error: 'Not authenticated' }
+
+  const rows = DEFAULT_STAGES.map((name, index) => ({ shop_id: userId, name, position: index }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase.from('stages') as any).insert(rows) as { error: { message: string } | null }
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/settings/stages')
+  revalidatePath('/board')
+  return {}
+}
