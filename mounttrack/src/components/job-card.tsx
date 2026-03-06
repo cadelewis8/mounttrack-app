@@ -39,11 +39,9 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardP
     })
   }
 
-  const formattedDate = new Date(job.estimated_completion_date + 'T00:00:00').toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  const [y, m, d] = job.estimated_completion_date.split('-')
+  const formattedDate = `${MONTHS[parseInt(m) - 1]} ${parseInt(d)}, ${y}`
 
   const jobNumberFormatted = `#${String(job.job_number).padStart(4, '0')}`
 
