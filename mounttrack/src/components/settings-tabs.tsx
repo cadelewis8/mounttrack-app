@@ -4,6 +4,7 @@ const tabs = [
   { id: 'shop', label: 'Shop', href: '/settings/shop' },
   { id: 'branding', label: 'Branding', href: '/settings/branding' },
   { id: 'subscription', label: 'Subscription', href: '/settings/subscription' },
+  { id: 'stages', label: 'Stages', href: '/settings/stages' },
 ] as const
 
 type TabId = typeof tabs[number]['id']
