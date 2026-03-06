@@ -120,10 +120,21 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
               type="button"
               onClick={() => {
                 if (!bulkTargetStageId) return
+                const ids = [...selectedJobIds]
+                // Update local state immediately so the board reflects the move
+                setJobsByStage((prev) => {
+                  const next = { ...prev }
+                  for (const stageId of Object.keys(next)) {
+                    next[stageId] = next[stageId].filter((j) => !ids.includes(j.id))
+                  }
+                  const movedJobs = ids.flatMap((id) => findJob(id, prev) ?? [])
+                  next[bulkTargetStageId] = [...(next[bulkTargetStageId] ?? []), ...movedJobs]
+                  return next
+                })
+                setSelectedJobIds(new Set())
+                setBulkTargetStageId('')
                 startTransition(async () => {
-                  await bulkMoveJobs([...selectedJobIds], bulkTargetStageId)
-                  setSelectedJobIds(new Set())
-                  setBulkTargetStageId('')
+                  await bulkMoveJobs(ids, bulkTargetStageId)
                 })
               }}
               disabled={!bulkTargetStageId}
