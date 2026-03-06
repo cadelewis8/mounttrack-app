@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { createJob } from '@/actions/jobs'
 import { PhotoUploadZone, type PhotoUploadZoneHandle } from '@/components/photo-upload-zone'
 
@@ -50,6 +51,7 @@ const intakeSchema = z.object({
 type IntakeFormValues = z.infer<typeof intakeSchema>
 
 export function JobIntakeForm() {
+  const router = useRouter()
   // Generate a stable jobId for photo upload paths before the DB record exists
   const jobId = useRef(crypto.randomUUID()).current
 
@@ -104,8 +106,9 @@ export function JobIntakeForm() {
     const result = await createJob(undefined, formData)
     if (result?.error) {
       setServerError(result.error)
+    } else {
+      router.push('/board')
     }
-    // Redirect to /board is handled by createJob on success
   }
 
   return (

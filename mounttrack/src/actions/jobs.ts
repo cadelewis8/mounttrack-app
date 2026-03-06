@@ -99,8 +99,6 @@ export async function createJob(_prevState: JobState, formData: FormData): Promi
   const { error } = await (supabase.from('jobs') as any).insert(jobData) as { error: { message: string } | null }
 
   if (error) return { error: error.message }
-
-  redirect('/board')
 }
 
 // Rush toggle — called from Kanban card quick-toggle
