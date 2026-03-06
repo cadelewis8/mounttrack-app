@@ -16,26 +16,19 @@ export default async function BoardPage() {
     .eq('shop_id', userId)
     .order('position', { ascending: true }) as { data: Stage[] | null }
 
-  // Jobs with overdue flag computed in SQL (not JS) — accurate to the server's clock
-  // is_overdue = true when estimated_completion_date < today's date
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: jobs } = await (supabase.from('jobs') as any)
-    .select(`
-      id,
-      job_number,
-      stage_id,
-      customer_name,
-      animal_type,
-      mount_style,
-      estimated_completion_date,
-      is_rush,
-      estimated_completion_date < now()::date as is_overdue
-    `)
+    .select('id, job_number, stage_id, customer_name, animal_type, mount_style, estimated_completion_date, is_rush')
     .eq('shop_id', userId)
-    .order('created_at', { ascending: true }) as { data: (Job & { is_overdue: boolean })[] | null }
+    .order('created_at', { ascending: true }) as { data: Job[] | null }
 
   const stageList = stages ?? []
-  const jobList = jobs ?? []
+  // Compute is_overdue server-side (server clock, same authority as SQL now())
+  const todayStr = new Date().toISOString().slice(0, 10)
+  const jobList = (jobs ?? []).map(job => ({
+    ...job,
+    is_overdue: !!job.estimated_completion_date && job.estimated_completion_date < todayStr,
+  }))
 
   // Group jobs by stage_id -> Record<stageId, Job[]>
   const jobsByStage: Record<string, Job[]> = {}
