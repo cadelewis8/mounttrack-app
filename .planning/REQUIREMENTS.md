@@ -36,7 +36,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **BOARD-01**: Owner can view all active jobs on a visual Kanban stage board with one column per stage
 - [ ] **BOARD-02**: Owner can drag a job card between stage columns
-- [ ] **BOARD-03**: Owner can customize stages per shop — add, rename, and reorder (defaults: Skinning, Fleshing, Tanning, Mounting, Finishing, Ready for Pickup)
+- [x] **BOARD-03**: Owner can customize stages per shop — add, rename, and reorder (defaults: Skinning, Fleshing, Tanning, Mounting, Finishing, Ready for Pickup)
 - [ ] **BOARD-04**: Owner can bulk-select multiple job cards and move them all to a specified stage in one action
 - [ ] **BOARD-05**: Owner can mark a job as Rush — job card shows a visual rush indicator on the board
 - [ ] **BOARD-06**: Jobs that have passed their estimated completion date are automatically flagged as overdue with a distinct visual indicator on the board
@@ -197,7 +197,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTAKE-08 | Phase 2 | Pending |
 | BOARD-01 | Phase 2 | Pending |
 | BOARD-02 | Phase 2 | Pending |
-| BOARD-03 | Phase 2 | Pending |
+| BOARD-03 | Phase 2 | Complete |
 | BOARD-04 | Phase 2 | Pending |
 | BOARD-05 | Phase 2 | Pending |
 | BOARD-06 | Phase 2 | Pending |

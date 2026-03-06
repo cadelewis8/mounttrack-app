@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-last_updated: "2026-03-06T04:03:56Z"
+status: unknown
+last_updated: "2026-03-06T13:57:57.074Z"
 progress:
-  total_phases: 7
+  total_phases: 2
   completed_phases: 1
-  total_plans: 29
-  completed_plans: 5
+  total_plans: 9
+  completed_plans: 6
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 2 of 7 (Job Intake Board) — IN PROGRESS
-Plan: 1 of 5 in current phase — COMPLETE
-Status: 02-01 complete — schema and TypeScript types established; plans 02-02 to 02-05 can proceed
-Last activity: 2026-03-06 — 02-01 complete (migration + TypeScript types)
+Plan: 4 of 5 in current phase — COMPLETE
+Status: 02-04 complete — Stage Manager at /settings/stages with full CRUD; 02-05 (Kanban board) remaining
+Last activity: 2026-03-06 — 02-04 complete (stage manager + dnd-kit sortable)
 
-Progress: [████░░░░░░] 17% (5 of 29 estimated total plans)
+Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [████░░░░░░] 17% (5 of 29 estimated total plans)
 | Phase 01-foundation P03 | 10 min | 2 tasks | 10 files |
 | Phase 01-foundation P04 | 15 min | 2 tasks | 15 files |
 | Phase 02-job-intake-board P01 | 5 min | 2 tasks | 2 files |
+| Phase 02-job-intake-board P04 | 3 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 02-job-intake-board P01]: seed_default_stages trigger is SECURITY DEFINER — fires as postgres role so stages can be inserted before shop owner's RLS session is established
 - [Phase 02-job-intake-board P01]: stage_id FK on jobs uses ON DELETE RESTRICT — stages with jobs cannot be deleted, prevents orphaned jobs
 - [Phase 02-job-intake-board P01]: is_overdue is TypeScript-only optional field — computed at application layer, not stored in DB
+- [Phase 02-job-intake-board]: dnd-kit listeners on grip handle only so rename/delete buttons remain clickable without triggering drag
+- [Phase 02-job-intake-board]: deleteStage guards: stageCount <= 1 blocks last-stage delete, jobCount > 0 blocks delete of occupied stage
+- [Phase 02-job-intake-board]: Settings page pattern: Server Component page + use client manager child component receiving initialX prop
 
 ### Pending Todos
 
@@ -98,5 +102,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 02-01-PLAN.md — Phase 2 data layer established
+Stopped at: Completed 02-04-PLAN.md — Stage Manager at /settings/stages
 Resume file: None
