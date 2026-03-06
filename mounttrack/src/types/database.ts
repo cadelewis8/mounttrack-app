@@ -27,6 +27,42 @@ export interface Shop {
   updated_at: string
 }
 
+export interface Stage {
+  id: string
+  shop_id: string
+  name: string
+  position: number
+  created_at: string
+  updated_at: string
+}
+
+export interface Job {
+  id: string
+  shop_id: string
+  job_number: number
+  stage_id: string | null
+  customer_name: string
+  customer_phone: string | null
+  customer_email: string | null
+  animal_type: string
+  mount_style: string
+  quoted_price: number
+  deposit_amount: number | null
+  estimated_completion_date: string  // ISO date string 'YYYY-MM-DD'
+  referral_source: string | null
+  is_rush: boolean
+  social_media_consent: boolean
+  photo_paths: string[]
+  is_overdue?: boolean  // computed column: estimated_completion_date < CURRENT_DATE (not stored in DB)
+  created_at: string
+  updated_at: string
+}
+
+export interface JobNumberSeq {
+  shop_id: string
+  last_number: number
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -40,10 +76,35 @@ export interface Database {
         Update: Partial<Omit<Shop, 'id' | 'created_at'>>
         Relationships: []
       }
+      stages: {
+        Row: Stage
+        Insert: Omit<Stage, 'id' | 'created_at' | 'updated_at'> & { id?: string; position?: number }
+        Update: Partial<Omit<Stage, 'id' | 'shop_id' | 'created_at'>>
+        Relationships: []
+      }
+      jobs: {
+        Row: Job
+        Insert: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'job_number' | 'is_overdue'> & {
+          id?: string
+          job_number?: number
+        }
+        Update: Partial<Omit<Job, 'id' | 'shop_id' | 'created_at' | 'is_overdue'>>
+        Relationships: []
+      }
+      job_number_seq: {
+        Row: JobNumberSeq
+        Insert: JobNumberSeq
+        Update: Partial<JobNumberSeq>
+        Relationships: []
+      }
     }
     // eslint-disable-next-line @typescript-eslint/ban-types
     Views: {}
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    Functions: {}
+    Functions: {
+      get_next_job_number: {
+        Args: { p_shop_id: string }
+        Returns: number
+      }
+    }
   }
 }
