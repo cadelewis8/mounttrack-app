@@ -27,9 +27,9 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardP
 
   // Overdue takes priority over rush (red > orange)
   const borderClass = job.is_overdue
-    ? 'border-l-4 border-l-red-500'
+    ? 'border-l-4 border-l-red-600'
     : job.is_rush
-    ? 'border-l-4 border-l-orange-500'
+    ? 'border-l-4 border-l-amber-400'
     : ''
 
   function handleRushToggle(e: React.MouseEvent) {
@@ -73,7 +73,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect }: JobCardP
           onClick={handleRushToggle}
           title={job.is_rush ? 'Remove rush flag' : 'Mark as rush'}
           className={`p-0.5 rounded transition-colors hover:bg-muted
-            ${job.is_rush ? 'text-orange-500' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
+            ${job.is_rush ? 'text-amber-400' : 'text-muted-foreground/40 hover:text-muted-foreground'}`}
         >
           <Zap className="h-3.5 w-3.5" fill={job.is_rush ? 'currentColor' : 'none'} />
         </button>
