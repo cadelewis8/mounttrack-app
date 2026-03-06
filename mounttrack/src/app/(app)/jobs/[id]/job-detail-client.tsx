@@ -236,6 +236,17 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
                 <Field label="Estimated Completion *" name="estimated_completion_date" type="date" defaultValue={job.estimated_completion_date} required />
               </Section>
 
+              {/* Notes */}
+              <Section title="Notes">
+                <textarea
+                  name="notes"
+                  defaultValue={job.notes ?? ''}
+                  rows={5}
+                  placeholder="Add any internal notes about this job…"
+                  className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--brand)] resize-y"
+                />
+              </Section>
+
               {/* Error / success feedback */}
               {state && 'error' in state && (
                 <p className="text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 rounded px-3 py-2">
