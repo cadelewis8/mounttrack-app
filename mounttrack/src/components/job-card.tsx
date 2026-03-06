@@ -2,7 +2,8 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useState, useTransition } from 'react'
-import { Zap, Trash2 } from 'lucide-react'
+import { Zap, Trash2, ExternalLink } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { toggleJobRush, deleteJob } from '@/actions/jobs'
 import type { Job } from '@/types/database'
 
@@ -18,6 +19,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: job.id })
 
+  const router = useRouter()
   const [isRush, setIsRush] = useState(job.is_rush)
   const [, startTransition] = useTransition()
 
@@ -27,12 +29,13 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
     opacity: isDragging ? 0 : 1,  // Hide original while DragOverlay shows ghost
   }
 
-  // Overdue takes priority over rush (red > orange)
-  const borderClass = job.is_overdue
-    ? 'border-l-4 border-l-red-600'
+  const accentColor = job.is_overdue && isRush
+    ? 'linear-gradient(to bottom, #dc2626 50%, #fbbf24 50%)'
+    : job.is_overdue
+    ? '#dc2626'
     : isRush
-    ? 'border-l-4 border-l-amber-400'
-    : ''
+    ? '#fbbf24'
+    : null
 
   function handleRushToggle(e: React.MouseEvent) {
     e.stopPropagation()
@@ -64,24 +67,41 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
       style={isOverlay ? {} : style}
       {...(isOverlay ? {} : { ...attributes, ...listeners })}
       suppressHydrationWarning
-      className={`rounded-md bg-card border p-3 cursor-grab shadow-sm select-none
-        ${borderClass}
+      className={`relative overflow-hidden rounded-md bg-card border p-3 cursor-grab shadow-sm select-none
         ${isSelected ? 'ring-2 ring-[var(--brand)]' : ''}
         ${isOverlay ? 'shadow-lg rotate-1 opacity-90' : ''}
       `}
     >
+      {accentColor && (
+        <div
+          className="absolute left-0 inset-y-0 w-1"
+          style={{ background: accentColor }}
+        />
+      )}
       {/* Primary line: customer — animal, mount */}
-      <p className="text-sm font-medium leading-snug">
+      <p className={`text-sm font-medium leading-snug ${accentColor ? 'pl-2' : ''}`}>
         {job.customer_name} — {job.animal_type}, {job.mount_style}
       </p>
 
       {/* Secondary line: date · job number */}
-      <div className="flex items-center justify-between mt-1">
+      <div className={`flex items-center justify-between mt-1 ${accentColor ? 'pl-2' : ''}`}>
         <p className="text-xs text-muted-foreground">
           {formattedDate} · {jobNumberFormatted}
         </p>
 
         <div className="flex items-center gap-0.5">
+          {/* Open detail page */}
+          {!isOverlay && (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); router.push(`/jobs/${job.id}`) }}
+              title="Open job"
+              className="p-0.5 rounded transition-colors text-muted-foreground/40 hover:text-foreground hover:bg-muted"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+            </button>
+          )}
+
           {/* Rush toggle */}
           <button
             type="button"
@@ -93,7 +113,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
             <Zap className="h-3.5 w-3.5" fill={isRush ? 'currentColor' : 'none'} />
           </button>
 
-          {/* Delete — visible on card hover */}
+          {/* Delete */}
           {!isOverlay && (
             <button
               type="button"
@@ -109,7 +129,7 @@ export function JobCard({ job, isOverlay, isSelected, onToggleSelect, onDelete }
 
       {/* Bulk select checkbox — shown when onToggleSelect is provided */}
       {onToggleSelect && (
-        <div className="mt-2 -mb-1">
+        <div className={`mt-2 -mb-1 ${accentColor ? 'pl-2' : ''}`}>
           <input
             type="checkbox"
             checked={isSelected ?? false}

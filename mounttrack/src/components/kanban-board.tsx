@@ -187,8 +187,11 @@ export function KanbanBoard({ stages, initialJobsByStage }: KanbanBoardProps) {
           </div>
         )}
 
-        {/* Columns scroll area */}
-        <div className="flex gap-4 overflow-x-auto h-full p-4 pb-0">
+        {/* Columns grid — 3 per row, rows share height equally */}
+        <div
+          className="grid grid-cols-3 gap-3 p-4 h-full"
+          style={{ gridTemplateRows: `repeat(${Math.ceil(stages.length / 3)}, 1fr)` }}
+        >
           {stages.map((stage) => (
             <KanbanColumn
               key={stage.id}

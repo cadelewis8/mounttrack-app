@@ -1,9 +1,10 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import type { Stage } from '@/types/database'
 
-type JobState = { error: string } | undefined
+type JobState = { error: string } | { success: true } | undefined
 
 // Called server-side to generate signed upload URLs for each photo
 // Returns one signed URL per file — client uploads directly to Supabase Storage
@@ -99,6 +100,56 @@ export async function createJob(_prevState: JobState, formData: FormData): Promi
   const { error } = await (supabase.from('jobs') as any).insert(jobData) as { error: { message: string } | null }
 
   if (error) return { error: error.message }
+}
+
+// Update all editable fields on an existing job
+export async function updateJob(_prevState: JobState, formData: FormData): Promise<JobState> {
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getClaims()
+  const userId = data?.claims?.sub ?? null
+  if (!userId) redirect('/login')
+
+  const jobId = formData.get('job_id') as string
+  if (!jobId) return { error: 'Job ID is required' }
+
+  const animalType = (formData.get('animal_type') as string || '').trim()
+  const animalCustom = (formData.get('animal_type_custom') as string || '').trim()
+  const mountStyle = (formData.get('mount_style') as string || '').trim()
+  const mountCustom = (formData.get('mount_style_custom') as string || '').trim()
+  const referral = (formData.get('referral_source') as string || '').trim()
+  const referralCustom = (formData.get('referral_source_custom') as string || '').trim()
+
+  const updates = {
+    customer_name: ((formData.get('customer_name') as string) || '').trim(),
+    customer_phone: (formData.get('customer_phone') as string) || null,
+    customer_email: (formData.get('customer_email') as string) || null,
+    animal_type: animalType === 'Other' ? (animalCustom || 'Other') : animalType,
+    mount_style: mountStyle === 'Other' ? (mountCustom || 'Other') : mountStyle,
+    quoted_price: parseFloat(formData.get('quoted_price') as string) || 0,
+    deposit_amount: formData.get('deposit_amount') ? parseFloat(formData.get('deposit_amount') as string) : null,
+    estimated_completion_date: formData.get('estimated_completion_date') as string,
+    referral_source: referral === 'Other' ? (referralCustom || null) : (referral || null),
+    social_media_consent: formData.get('social_media_consent') === 'true',
+    notes: (formData.get('notes') as string) || null,
+  }
+
+  if (!updates.customer_name) return { error: 'Customer name is required' }
+  if (!updates.animal_type) return { error: 'Animal type is required' }
+  if (!updates.mount_style) return { error: 'Mount style is required' }
+  if (updates.quoted_price <= 0) return { error: 'Quoted price must be greater than 0' }
+  if (!updates.estimated_completion_date) return { error: 'Estimated completion date is required' }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase.from('jobs') as any)
+    .update(updates)
+    .eq('id', jobId)
+    .eq('shop_id', userId) as { error: { message: string } | null }
+
+  if (error) return { error: error.message }
+
+  revalidatePath(`/jobs/${jobId}`)
+  revalidatePath('/board')
+  return { success: true }
 }
 
 // Rush toggle — called from Kanban card quick-toggle

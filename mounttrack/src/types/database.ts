@@ -53,6 +53,7 @@ export interface Job {
   is_rush: boolean
   social_media_consent: boolean
   photo_paths: string[]
+  notes: string | null
   is_overdue?: boolean  // computed column: estimated_completion_date < CURRENT_DATE (not stored in DB)
   created_at: string
   updated_at: string

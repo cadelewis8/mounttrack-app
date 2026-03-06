@@ -63,6 +63,7 @@ function StageRow({ stage, canDelete, onDelete, onRename }: StageRowProps) {
         {...attributes}
         {...listeners}
         aria-label="Drag to reorder"
+        suppressHydrationWarning
       >
         <GripVertical className="h-4 w-4" />
       </button>

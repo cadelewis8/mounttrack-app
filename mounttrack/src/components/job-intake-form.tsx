@@ -104,7 +104,7 @@ export function JobIntakeForm() {
     formData.set('photo_paths', JSON.stringify(uploadedPaths))
 
     const result = await createJob(undefined, formData)
-    if (result?.error) {
+    if (result && 'error' in result) {
       setServerError(result.error)
     } else {
       router.push('/board')
