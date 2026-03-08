@@ -219,3 +219,35 @@ export async function deleteJob(jobId: string): Promise<{ error?: string }> {
   if (error) return { error: error.message }
   return {}
 }
+
+// Append newly uploaded photo paths to an existing job's photo_paths array
+export async function addJobPhotos(jobId: string, newPaths: string[]): Promise<{ error?: string }> {
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getClaims()
+  const userId = data?.claims?.sub ?? null
+  if (!userId) return { error: 'Not authenticated' }
+  if (!newPaths.length) return {}
+
+  // Fetch existing photo_paths first
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: job, error: fetchError } = await (supabase.from('jobs') as any)
+    .select('photo_paths')
+    .eq('id', jobId)
+    .eq('shop_id', userId)
+    .single() as { data: { photo_paths: string[] } | null; error: { message: string } | null }
+
+  if (fetchError || !job) return { error: fetchError?.message ?? 'Job not found' }
+
+  const merged = [...(job.photo_paths ?? []), ...newPaths]
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase.from('jobs') as any)
+    .update({ photo_paths: merged })
+    .eq('id', jobId)
+    .eq('shop_id', userId) as { error: { message: string } | null }
+
+  if (error) return { error: error.message }
+
+  revalidatePath(`/jobs/${jobId}`)
+  return {}
+}
