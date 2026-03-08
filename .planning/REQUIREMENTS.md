@@ -44,9 +44,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Queue & Calendar (QUEUE)
 
-- [ ] **QUEUE-01**: Owner can view a queue/backlog view showing all active jobs ordered by estimated completion date with per-stage job counts
-- [ ] **QUEUE-02**: Owner can view a calendar view showing all active jobs plotted by their estimated completion date
-- [ ] **QUEUE-03**: Calendar view allows the owner to identify weeks where too many jobs are due at once before promising dates to new customers
+- [x] **QUEUE-01**: Owner can view a queue/backlog view showing all active jobs ordered by estimated completion date with per-stage job counts
+- [x] **QUEUE-02**: Owner can view a calendar view showing all active jobs plotted by their estimated completion date
+- [x] **QUEUE-03**: Calendar view allows the owner to identify weeks where too many jobs are due at once before promising dates to new customers
 
 ### Waitlist (WAIT)
 
@@ -202,9 +202,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOARD-05 | Phase 2 | Complete |
 | BOARD-06 | Phase 2 | Complete |
 | BOARD-07 | Phase 2 | Complete |
-| QUEUE-01 | Phase 3 | Pending |
-| QUEUE-02 | Phase 3 | Pending |
-| QUEUE-03 | Phase 3 | Pending |
+| QUEUE-01 | Phase 3 | Complete |
+| QUEUE-02 | Phase 3 | Complete |
+| QUEUE-03 | Phase 3 | Complete |
 | WAIT-01 | Phase 6 | Pending |
 | WAIT-02 | Phase 6 | Pending |
 | JOB-01 | Phase 3 | Complete |

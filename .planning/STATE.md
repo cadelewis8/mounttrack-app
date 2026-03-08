@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-08T22:30:00Z"
+last_updated: "2026-03-08T22:28:23.477Z"
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 12
   completed_plans: 12
 ---
@@ -61,6 +61,7 @@ Progress: [███████░░░] 24% (9 of 29 estimated total plans)
 | Phase 02-job-intake-board P03 | 9 | 2 tasks | 4 files |
 | Phase 03-job-detail-views-search P03 | 8 | 1 tasks | 2 files |
 | Phase 03-job-detail-views-search P01 | 12 min | 2 tasks | 2 files |
+| Phase 03-job-detail-views-search P02 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,8 @@ Recent decisions affecting current work:
 - [Phase 03-job-detail-views-search]: job_number search uses .eq() not .ilike() — ilike on numeric columns throws in Postgres
 - [Phase 03-job-detail-views-search]: Search page only queries DB when hasQuery is true — avoids full table scan on empty /search visit
 - [Phase 03-job-detail-views-search]: JOB-05 (communication history) explicitly deferred to Phase 6 — not implemented in search plan
+- [Phase 03-job-detail-views-search]: Promise<{ data: T[] | null }> cast on supabase chained query — inline 'as' after method chain causes TS1434 parse error
+- [Phase 03-job-detail-views-search]: T00:00:00 suffix on YYYY-MM-DD date strings in CalendarClient — prevents UTC offset shifting date to previous day
 
 ### Pending Todos
 
