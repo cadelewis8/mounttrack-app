@@ -118,5 +118,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-08
-Stopped at: Completed 03-01-PLAN.md — photo upload on job detail page (addJobPhotos action + Add Photos SideCard)
+Stopped at: Completed 03-03-PLAN.md — /search page with full-text and composable filter support
 Resume file: None
