@@ -46,6 +46,7 @@ const intakeSchema = z.object({
   referral_source_custom: z.string().optional(),
   is_rush: z.boolean(),
   social_media_consent: z.boolean(),
+  notes: z.string().optional(),
 })
 
 type IntakeFormValues = z.infer<typeof intakeSchema>
@@ -101,6 +102,7 @@ export function JobIntakeForm() {
     if (values.referral_source_custom) formData.set('referral_source_custom', values.referral_source_custom)
     formData.set('is_rush', String(values.is_rush))
     formData.set('social_media_consent', String(values.social_media_consent))
+    if (values.notes) formData.set('notes', values.notes)
     formData.set('photo_paths', JSON.stringify(uploadedPaths))
 
     const result = await createJob(undefined, formData)
@@ -295,6 +297,17 @@ export function JobIntakeForm() {
           />
           <span className="text-sm font-medium">Customer consents to social media posting</span>
         </label>
+      </div>
+
+      {/* Notes */}
+      <div>
+        <label className="block text-sm font-medium mb-1">Notes</label>
+        <textarea
+          {...register('notes')}
+          rows={4}
+          placeholder="Any internal notes about this job…"
+          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)] resize-y"
+        />
       </div>
 
       {/* Photo Upload Zone */}

@@ -87,6 +87,7 @@ export async function createJob(_prevState: JobState, formData: FormData): Promi
     is_rush: formData.get('is_rush') === 'true',
     social_media_consent: formData.get('social_media_consent') === 'true',
     photo_paths: photoPaths,
+    notes: (formData.get('notes') as string) || null,
   }
 
   // Validate required fields
