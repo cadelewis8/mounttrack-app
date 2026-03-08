@@ -127,3 +127,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* react-big-calendar Tailwind fix */
+.rbc-calendar { box-sizing: border-box; }
+.rbc-calendar * { box-sizing: border-box; }
