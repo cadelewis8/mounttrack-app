@@ -1,9 +1,11 @@
 'use client'
-import { useActionState, useState, useTransition } from 'react'
+import { useActionState, useState, useTransition, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Zap, Trash2 } from 'lucide-react'
-import { updateJob, toggleJobRush, updateJobStage, deleteJob } from '@/actions/jobs'
+import { ArrowLeft, Zap, Trash2, Camera } from 'lucide-react'
+import { updateJob, toggleJobRush, updateJobStage, deleteJob, addJobPhotos } from '@/actions/jobs'
+import { PhotoUploadZone } from '@/components/photo-upload-zone'
+import type { PhotoUploadZoneHandle } from '@/components/photo-upload-zone'
 import type { Job, Stage } from '@/types/database'
 
 const ANIMAL_TYPES = [
@@ -37,6 +39,11 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
   const [stageId, setStageId] = useState(job.stage_id ?? '')
   const [, startTransition] = useTransition()
   const [state, formAction, pending] = useActionState(updateJob, undefined)
+
+  const photoZoneRef = useRef<PhotoUploadZoneHandle>(null)
+  const [uploadPending, setUploadPending] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const [uploadSuccess, setUploadSuccess] = useState(false)
 
   // Detect if current values are in the known lists
   const animalIsCustom = !ANIMAL_TYPES.slice(0, -1).includes(job.animal_type) && job.animal_type !== 'Other'
@@ -74,6 +81,29 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
     if (!confirm(`Delete ${jobNum} for ${job.customer_name}? This cannot be undone.`)) return
     await deleteJob(job.id)
     router.push('/board')
+  }
+
+  async function handlePhotoUpload() {
+    if (!photoZoneRef.current) return
+    setUploadPending(true)
+    setUploadError(null)
+    setUploadSuccess(false)
+    try {
+      const newPaths = await photoZoneRef.current.uploadAll()
+      if (newPaths.length > 0) {
+        const result = await addJobPhotos(job.id, newPaths)
+        if (result.error) {
+          setUploadError(result.error)
+        } else {
+          setUploadSuccess(true)
+          // page will revalidate and re-render with new photos
+        }
+      }
+    } catch {
+      setUploadError('Upload failed')
+    } finally {
+      setUploadPending(false)
+    }
   }
 
   return (
@@ -326,6 +356,32 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
                   </div>
                 </SideCard>
               )}
+
+              {/* Add Photos */}
+              <SideCard title="Add Photos">
+                <div className="space-y-3">
+                  <PhotoUploadZone
+                    ref={photoZoneRef}
+                    jobId={job.id}
+                    onUploadComplete={() => { setUploadSuccess(false); setUploadError(null) }}
+                  />
+                  {uploadError && (
+                    <p className="text-xs text-red-500">{uploadError}</p>
+                  )}
+                  {uploadSuccess && (
+                    <p className="text-xs text-green-600 dark:text-green-400">Photos uploaded!</p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handlePhotoUpload}
+                    disabled={uploadPending}
+                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-md bg-[var(--brand)] text-white text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
+                  >
+                    <Camera className="h-4 w-4" />
+                    {uploadPending ? 'Uploading\u2026' : 'Upload Photos'}
+                  </button>
+                </div>
+              </SideCard>
             </div>
 
           </div>
