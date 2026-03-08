@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-06T14:21:43.724Z"
+last_updated: "2026-03-08T22:30:00Z"
 progress:
-  total_phases: 2
-  completed_phases: 1
-  total_plans: 9
-  completed_plans: 8
+  total_phases: 3
+  completed_phases: 2
+  total_plans: 12
+  completed_plans: 12
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-01)
 
 **Core value:** A taxidermy shop owner can intake a job, drag it through production stages, and have the customer automatically kept informed and able to pay — without the owner picking up the phone.
-**Current focus:** Phase 2 — Job Intake Board (in progress)
+**Current focus:** Phase 3 — Job Detail Views & Search
 
 ## Current Position
 
-Phase: 2 of 7 (Job Intake Board) — IN PROGRESS
-Plan: 3 of 5 in current phase — COMPLETE
-Status: 02-03 complete — Kanban board at /board with dnd-kit drag-and-drop; 02-05 remaining
-Last activity: 2026-03-06 — 02-03 complete (Kanban board, KanbanBoard/KanbanColumn/JobCard components)
+Phase: 3 of 7 (Job Detail Views & Search) — IN PROGRESS
+Plan: 3 of 3 in current phase — COMPLETE
+Status: 03-03 complete — /search server component with full-text and composable filter support
+Last activity: 2026-03-08 — 03-03 complete (/search page: text search via .or()/.ilike()/.eq(), stage/rush/overdue/date-range filters)
 
-Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
+Progress: [███████░░░] 24% (9 of 29 estimated total plans)
 
 ## Performance Metrics
 
@@ -59,6 +59,8 @@ Progress: [██████░░░░] 21% (6 of 29 estimated total plans)
 | Phase 02-job-intake-board P04 | 3 min | 2 tasks | 5 files |
 | Phase 02-job-intake-board P02 | 6 min | 2 tasks | 5 files |
 | Phase 02-job-intake-board P03 | 9 | 2 tasks | 4 files |
+| Phase 03-job-detail-views-search P03 | 8 | 1 tasks | 2 files |
+| Phase 03-job-detail-views-search P01 | 12 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -97,6 +99,11 @@ Recent decisions affecting current work:
 - [Phase 02-job-intake-board]: useDroppable on column container required for empty columns to accept drops — SortableContext alone insufficient
 - [Phase 02-job-intake-board]: PointerSensor activationConstraint distance:5 allows button clicks in cards without triggering drag
 - [Phase 02-job-intake-board]: Bulk select state lifted into KanbanBoard — ready for Plan 05 toolbar without refactor
+- [Phase 03-job-detail-views-search P01]: addJobPhotos fetches existing photo_paths before merging — append-safe pattern, avoids overwriting existing photos
+- [Phase 03-job-detail-views-search P01]: PhotoUploadZone onUploadComplete prop used (not onFilesSelected) — actual component interface; uploadAll() return value provides paths; onUploadComplete clears feedback state only
+- [Phase 03-job-detail-views-search]: job_number search uses .eq() not .ilike() — ilike on numeric columns throws in Postgres
+- [Phase 03-job-detail-views-search]: Search page only queries DB when hasQuery is true — avoids full table scan on empty /search visit
+- [Phase 03-job-detail-views-search]: JOB-05 (communication history) explicitly deferred to Phase 6 — not implemented in search plan
 
 ### Pending Todos
 
@@ -110,6 +117,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06
-Stopped at: Completed 02-03-PLAN.md — Kanban board at /board with dnd-kit drag-and-drop
+Last session: 2026-03-08
+Stopped at: Completed 03-01-PLAN.md — photo upload on job detail page (addJobPhotos action + Add Photos SideCard)
 Resume file: None

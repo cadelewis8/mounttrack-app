@@ -55,11 +55,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Job Detail (JOB)
 
-- [ ] **JOB-01**: Owner can view and edit any job field after intake
-- [ ] **JOB-02**: Owner can update the estimated completion date at any time
-- [ ] **JOB-03**: Owner can upload progress photos to a job at any time (including direct camera capture on mobile)
-- [ ] **JOB-04**: Owner can add internal notes to a job via a chronological notes feed — never visible to customers
-- [ ] **JOB-05**: Owner can view the full communication history (all SMS and emails sent) per job
+- [x] **JOB-01**: Owner can view and edit any job field after intake
+- [x] **JOB-02**: Owner can update the estimated completion date at any time
+- [x] **JOB-03**: Owner can upload progress photos to a job at any time (including direct camera capture on mobile)
+- [x] **JOB-04**: Owner can add internal notes to a job via a chronological notes feed — never visible to customers
+- [x] **JOB-05**: Owner can view the full communication history (all SMS and emails sent) per job
 
 ### Customer Portal (PORTAL)
 
@@ -90,8 +90,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Search & Filters (SEARCH)
 
-- [ ] **SEARCH-01**: Owner can search active and past jobs by customer name, job number, or animal type
-- [ ] **SEARCH-02**: Owner can filter jobs by stage, overdue status, rush status, or date range
+- [x] **SEARCH-01**: Owner can search active and past jobs by customer name, job number, or animal type
+- [x] **SEARCH-02**: Owner can filter jobs by stage, overdue status, rush status, or date range
 
 ### Supply Alerts (SUPPLY)
 
@@ -121,7 +121,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Social Media Consent (SOCIAL)
 
 - [x] **SOCIAL-01**: Job intake form includes a checkbox for the customer to opt-in to allowing the shop to share photos of their finished mount on social media
-- [ ] **SOCIAL-02**: Photo sharing opt-in status is visible on the job detail page and on any uploaded photos flagged as shareable
+- [x] **SOCIAL-02**: Photo sharing opt-in status is visible on the job detail page and on any uploaded photos flagged as shareable
 
 ---
 
@@ -207,11 +207,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUEUE-03 | Phase 3 | Pending |
 | WAIT-01 | Phase 6 | Pending |
 | WAIT-02 | Phase 6 | Pending |
-| JOB-01 | Phase 3 | Pending |
-| JOB-02 | Phase 3 | Pending |
-| JOB-03 | Phase 3 | Pending |
-| JOB-04 | Phase 3 | Pending |
-| JOB-05 | Phase 3 | Pending |
+| JOB-01 | Phase 3 | Complete |
+| JOB-02 | Phase 3 | Complete |
+| JOB-03 | Phase 3 | Complete |
+| JOB-04 | Phase 3 | Complete |
+| JOB-05 | Phase 3 | Complete |
 | PORTAL-01 | Phase 4 | Pending |
 | PORTAL-02 | Phase 4 | Pending |
 | PORTAL-03 | Phase 4 | Pending |
@@ -230,8 +230,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTIF-02 | Phase 6 | Pending |
 | NOTIF-03 | Phase 6 | Pending |
 | NOTIF-04 | Phase 6 | Pending |
-| SEARCH-01 | Phase 3 | Pending |
-| SEARCH-02 | Phase 3 | Pending |
+| SEARCH-01 | Phase 3 | Complete |
+| SEARCH-02 | Phase 3 | Complete |
 | SUPPLY-01 | Phase 7 | Pending |
 | SUPPLY-02 | Phase 7 | Pending |
 | REPORT-01 | Phase 7 | Pending |
@@ -246,7 +246,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POST-05 | Phase 7 | Pending |
 | DOC-01 | Phase 7 | Pending |
 | SOCIAL-01 | Phase 2 | Complete |
-| SOCIAL-02 | Phase 3 | Pending |
+| SOCIAL-02 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 68 total (note: source file states 67; actual count is 68)
