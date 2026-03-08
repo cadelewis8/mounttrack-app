@@ -23,6 +23,7 @@ interface PhotoFile {
 export interface PhotoUploadZoneProps {
   jobId: string
   onUploadComplete: (paths: string[]) => void
+  capture?: 'environment' | 'user' | boolean
 }
 
 // Handle exposed via forwardRef so parent form can call uploadAll imperatively
@@ -31,7 +32,7 @@ export interface PhotoUploadZoneHandle {
 }
 
 export const PhotoUploadZone = forwardRef<PhotoUploadZoneHandle, PhotoUploadZoneProps>(
-  function PhotoUploadZone({ jobId, onUploadComplete }, ref) {
+  function PhotoUploadZone({ jobId, onUploadComplete, capture }, ref) {
     const [photos, setPhotos] = useState<PhotoFile[]>([])
     const [uploading, setUploading] = useState(false)
     const [uploadError, setUploadError] = useState<string | null>(null)
@@ -108,7 +109,7 @@ export const PhotoUploadZone = forwardRef<PhotoUploadZoneHandle, PhotoUploadZone
           className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
           ${isDragActive ? 'border-[var(--brand)] bg-[var(--brand)]/5' : 'border-muted hover:border-muted-foreground/50'}`}
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} capture={capture} />
           <p className="text-sm text-muted-foreground">
             {isDragActive ? 'Drop photos here' : 'Drag photos here or click to select'}
           </p>

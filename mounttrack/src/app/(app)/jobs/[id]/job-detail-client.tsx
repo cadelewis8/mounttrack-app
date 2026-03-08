@@ -363,6 +363,7 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
                   <PhotoUploadZone
                     ref={photoZoneRef}
                     jobId={job.id}
+                    capture="environment"
                     onUploadComplete={() => { setUploadSuccess(false); setUploadError(null) }}
                   />
                   {uploadError && (
