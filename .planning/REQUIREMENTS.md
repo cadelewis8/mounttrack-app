@@ -63,8 +63,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Customer Portal (PORTAL)
 
-- [ ] **PORTAL-01**: Customer receives a unique personal link via SMS and email at job intake
-- [ ] **PORTAL-02**: Customer can open their portal via the personal link with no login or account required
+- [x] **PORTAL-01**: Customer receives a unique personal link via SMS and email at job intake
+- [x] **PORTAL-02**: Customer can open their portal via the personal link with no login or account required
 - [ ] **PORTAL-03**: Portal shows a visual progress timeline of all stages with the current stage highlighted
 - [ ] **PORTAL-04**: Portal shows the estimated completion date; updates in real time when the owner changes it
 - [ ] **PORTAL-05**: Portal is mobile-first — single column layout, large touch targets, no horizontal scroll
@@ -212,8 +212,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | JOB-03 | Phase 3 | Complete |
 | JOB-04 | Phase 3 | Complete |
 | JOB-05 | Phase 3 | Complete |
-| PORTAL-01 | Phase 4 | Pending |
-| PORTAL-02 | Phase 4 | Pending |
+| PORTAL-01 | Phase 4 | Complete |
+| PORTAL-02 | Phase 4 | Complete |
 | PORTAL-03 | Phase 4 | Pending |
 | PORTAL-04 | Phase 4 | Pending |
 | PORTAL-05 | Phase 4 | Pending |

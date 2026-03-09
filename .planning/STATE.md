@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 
 ## Current Position
 
-Phase: 3 of 7 (Job Detail Views & Search) — IN PROGRESS
-Plan: 3 of 3 in current phase — COMPLETE
-Status: 03-03 complete — /search server component with full-text and composable filter support
-Last activity: 2026-03-08 — 03-03 complete (/search page: text search via .or()/.ilike()/.eq(), stage/rush/overdue/date-range filters)
+Phase: 4 of 7 (Customer Portal) — IN PROGRESS
+Plan: 1 of 4 in current phase — COMPLETE
+Status: 04-01 complete — portal_token UUID column migration, Job interface updated, service client hardened with persistSession: false
+Last activity: 2026-03-09 — 04-01 complete (portal_token migration file + TypeScript types + service client persistSession: false)
 
-Progress: [███████░░░] 24% (9 of 29 estimated total plans)
+Progress: [███████░░░] 27% (10 of 29 estimated total plans)
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [███████░░░] 24% (9 of 29 estimated total plans)
 | Phase 03-job-detail-views-search P03 | 8 | 1 tasks | 2 files |
 | Phase 03-job-detail-views-search P01 | 12 min | 2 tasks | 2 files |
 | Phase 03-job-detail-views-search P02 | 3 | 2 tasks | 5 files |
+| Phase 04-customer-portal P01 | 2 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,9 @@ Recent decisions affecting current work:
 - [Phase 03-job-detail-views-search]: JOB-05 (communication history) explicitly deferred to Phase 6 — not implemented in search plan
 - [Phase 03-job-detail-views-search]: Promise<{ data: T[] | null }> cast on supabase chained query — inline 'as' after method chain causes TS1434 parse error
 - [Phase 03-job-detail-views-search]: T00:00:00 suffix on YYYY-MM-DD date strings in CalendarClient — prevents UTC offset shifting date to previous day
+- [Phase 04-customer-portal P01]: portal_token uses UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE — DB auto-populates, no application code needed on job creation
+- [Phase 04-customer-portal P01]: Insert shape excludes portal_token from Omit and re-adds as optional — callers not forced to provide token DB handles automatically
+- [Phase 04-customer-portal P01]: persistSession: false added to createServiceClient — prevents auth state caching in unauthenticated portal server renders
 
 ### Pending Todos
 
@@ -120,6 +124,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08
-Stopped at: Completed 03-03-PLAN.md — /search page with full-text and composable filter support
+Last session: 2026-03-09
+Stopped at: Completed 04-01-PLAN.md — portal_token migration, Job interface updated, service client hardened
 Resume file: None
