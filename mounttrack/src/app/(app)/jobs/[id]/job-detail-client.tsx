@@ -33,6 +33,26 @@ interface JobDetailClientProps {
   photoUrls: { path: string; url: string }[]
 }
 
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false)
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(value)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="shrink-0 rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+    >
+      {copied ? 'Copied!' : 'Copy'}
+    </button>
+  )
+}
+
 export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps) {
   const router = useRouter()
   const [isRush, setIsRush] = useState(job.is_rush)
@@ -57,6 +77,7 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
     referralIsCustom ? 'Other' : (job.referral_source || '')
   )
 
+  const portalUrl = `${process.env.NEXT_PUBLIC_URL}/portal/${job.portal_token}`
   const balance = job.quoted_price - (job.deposit_amount ?? 0)
   const jobNum = `#${String(job.job_number).padStart(4, '0')}`
   const saved = state && 'success' in state
@@ -381,6 +402,21 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
                     <Camera className="h-4 w-4" />
                     {uploadPending ? 'Uploading\u2026' : 'Upload Photos'}
                   </button>
+                </div>
+              </SideCard>
+
+              {/* Customer Portal Link */}
+              <SideCard title="Customer Portal Link">
+                <div className="space-y-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Share this link with your customer — no login required.
+                  </p>
+                  <div className="flex items-center gap-2 rounded-md bg-gray-50 px-3 py-2 dark:bg-gray-800">
+                    <code className="min-w-0 flex-1 truncate text-xs text-gray-700 dark:text-gray-300">
+                      {portalUrl}
+                    </code>
+                    <CopyButton value={portalUrl} />
+                  </div>
                 </div>
               </SideCard>
             </div>
