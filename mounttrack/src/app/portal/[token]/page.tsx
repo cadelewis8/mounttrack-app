@@ -3,6 +3,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { StageTimeline } from '@/components/portal/stage-timeline'
 import { PhotoGrid } from '@/components/portal/photo-grid'
 import { PortalHeader } from '@/components/portal/portal-header'
+import { PortalAutoRefresh } from '@/components/portal/portal-auto-refresh'
 import type { Job, Shop, Stage } from '@/types/database'
 
 type PortalJob = Omit<Job, 'is_overdue'> & { shops: Shop }
@@ -62,6 +63,7 @@ export default async function PortalPage({
       className="min-h-screen bg-gray-50"
       style={{ '--brand': shop.brand_color } as React.CSSProperties}
     >
+      <PortalAutoRefresh />
       <PortalHeader shop={shop} />
 
       <main className="mx-auto max-w-lg px-4 py-8 space-y-8">
