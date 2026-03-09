@@ -86,7 +86,12 @@ Plans:
   3. Portal shows progress photos the owner has uploaded; customer can tap any photo to view it full-screen
   4. Portal is entirely branded with the shop's logo, name, and brand color — the name "MountTrack" is never visible to the customer
   5. Portal renders correctly on mobile with a single-column layout, large touch targets, and no horizontal scroll
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — DB migration (portal_token column + index) + TypeScript types update + service client hardening
+- [ ] 04-02-PLAN.md — Portal page (/portal/[token]) + StageTimeline, PhotoGrid, PortalHeader components
+- [ ] 04-03-PLAN.md — Owner job detail: portal link card with copy-to-clipboard button
 
 ### Phase 5: Payments
 **Goal**: Customers can pay their balance (in full or partially) directly from their portal, and the owner has full visibility into every payment, deposit, and outstanding balance.
@@ -132,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Foundation | 4/4 | Complete | 2026-03-04 |
 | 2. Job Intake & Board | 4/5 | In Progress|  |
 | 3. Job Detail, Views & Search | 2/3 | In Progress|  |
-| 4. Customer Portal | 0/TBD | Not started | - |
+| 4. Customer Portal | 0/3 | Not started | - |
 | 5. Payments | 0/TBD | Not started | - |
 | 6. Notifications & Waitlist | 0/TBD | Not started | - |
 | 7. Reports, Supply, Post-Completion & Social | 0/TBD | Not started | - |
