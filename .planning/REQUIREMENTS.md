@@ -65,12 +65,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **PORTAL-01**: Customer receives a unique personal link via SMS and email at job intake
 - [x] **PORTAL-02**: Customer can open their portal via the personal link with no login or account required
-- [ ] **PORTAL-03**: Portal shows a visual progress timeline of all stages with the current stage highlighted
-- [ ] **PORTAL-04**: Portal shows the estimated completion date; updates in real time when the owner changes it
-- [ ] **PORTAL-05**: Portal is mobile-first — single column layout, large touch targets, no horizontal scroll
-- [ ] **PORTAL-06**: Customer can view progress photos the owner has uploaded
-- [ ] **PORTAL-07**: Customer can tap any photo to view it full-screen
-- [ ] **PORTAL-08**: Portal is branded with the shop's logo, name, and custom brand color — no MountTrack branding is visible to the customer
+- [x] **PORTAL-03**: Portal shows a visual progress timeline of all stages with the current stage highlighted
+- [x] **PORTAL-04**: Portal shows the estimated completion date; updates in real time when the owner changes it
+- [x] **PORTAL-05**: Portal is mobile-first — single column layout, large touch targets, no horizontal scroll
+- [x] **PORTAL-06**: Customer can view progress photos the owner has uploaded
+- [x] **PORTAL-07**: Customer can tap any photo to view it full-screen
+- [x] **PORTAL-08**: Portal is branded with the shop's logo, name, and custom brand color — no MountTrack branding is visible to the customer
 
 ### Payments (PAY)
 
@@ -214,12 +214,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | JOB-05 | Phase 3 | Complete |
 | PORTAL-01 | Phase 4 | Complete |
 | PORTAL-02 | Phase 4 | Complete |
-| PORTAL-03 | Phase 4 | Pending |
-| PORTAL-04 | Phase 4 | Pending |
-| PORTAL-05 | Phase 4 | Pending |
-| PORTAL-06 | Phase 4 | Pending |
-| PORTAL-07 | Phase 4 | Pending |
-| PORTAL-08 | Phase 4 | Pending |
+| PORTAL-03 | Phase 4 | Complete |
+| PORTAL-04 | Phase 4 | Complete |
+| PORTAL-05 | Phase 4 | Complete |
+| PORTAL-06 | Phase 4 | Complete |
+| PORTAL-07 | Phase 4 | Complete |
+| PORTAL-08 | Phase 4 | Complete |
 | PAY-01 | Phase 5 | Pending |
 | PAY-02 | Phase 5 | Pending |
 | PAY-03 | Phase 5 | Pending |

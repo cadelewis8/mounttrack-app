@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-09T23:06:18.272Z"
+last_updated: "2026-03-09T23:07:51.859Z"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -64,6 +64,7 @@ Progress: [███████░░░] 27% (10 of 29 estimated total plans)
 | Phase 03-job-detail-views-search P02 | 3 | 2 tasks | 5 files |
 | Phase 04-customer-portal P01 | 2 min | 2 tasks | 3 files |
 | Phase 04-customer-portal P03 | 3 | 1 tasks | 1 files |
+| Phase 04-customer-portal P02 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -115,6 +116,10 @@ Recent decisions affecting current work:
 - [Phase 04-customer-portal]: page.tsx uses select('*') so portal_token included automatically — no query change needed
 - [Phase 04-customer-portal]: CopyButton defined as module-level function in job-detail-client.tsx (already 'use client') rather than a separate file
 - [Phase 04-customer-portal]: portalUrl constructed client-side from NEXT_PUBLIC_URL env var + job.portal_token
+- [Phase 04-customer-portal]: Portal page placed at src/app/portal/[token]/ — sibling of (app)/ group so (app)/layout.tsx auth check never fires for portal requests
+- [Phase 04-customer-portal]: notFound() called uniformly for any token lookup failure — prevents oracle attacks
+- [Phase 04-customer-portal]: --brand CSS custom property set on portal root div — Server and Client Components consume via [var(--brand)] Tailwind classes without JS
+- [Phase 04-customer-portal]: Native <dialog> for photo lightbox — showModal() handles focus trapping, Escape key, and backdrop accessibility; zero npm dependencies
 
 ### Pending Todos
 

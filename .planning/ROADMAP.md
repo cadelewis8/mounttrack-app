@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Auth, shop setup, subscription billing, and the multi-tenant security model
 - [ ] **Phase 2: Job Intake & Board** - Job creation with all intake fields, visual Kanban stage board with drag-and-drop
 - [ ] **Phase 3: Job Detail, Views & Search** - Job detail page, queue and calendar views, search and filters
-- [ ] **Phase 4: Customer Portal** - Token-gated no-login portal showing job status, photos, and branded shop identity
+- [x] **Phase 4: Customer Portal** - Token-gated no-login portal showing job status, photos, and branded shop identity (completed 2026-03-09)
 - [ ] **Phase 5: Payments** - Stripe customer payments on portal, partial payments, balance tracking
 - [ ] **Phase 6: Notifications & Waitlist** - Automated branded SMS and email on stage changes, waitlist flow
 - [ ] **Phase 7: Reports, Supply, Post-Completion & Social** - Revenue reports, supply alerts, post-pickup automation, social consent
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Foundation | 4/4 | Complete | 2026-03-04 |
 | 2. Job Intake & Board | 4/5 | In Progress|  |
 | 3. Job Detail, Views & Search | 2/3 | In Progress|  |
-| 4. Customer Portal | 2/3 | In Progress|  |
+| 4. Customer Portal | 3/3 | Complete   | 2026-03-09 |
 | 5. Payments | 0/TBD | Not started | - |
 | 6. Notifications & Waitlist | 0/TBD | Not started | - |
 | 7. Reports, Supply, Post-Completion & Social | 0/TBD | Not started | - |
