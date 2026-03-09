@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-08T22:33:37.797Z"
+last_updated: "2026-03-09T23:06:18.272Z"
 progress:
-  total_phases: 3
+  total_phases: 4
   completed_phases: 3
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 15
+  completed_plans: 14
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 4 of 7 (Customer Portal) — IN PROGRESS
-Plan: 1 of 4 in current phase — COMPLETE
-Status: 04-01 complete — portal_token UUID column migration, Job interface updated, service client hardened with persistSession: false
-Last activity: 2026-03-09 — 04-01 complete (portal_token migration file + TypeScript types + service client persistSession: false)
+Plan: 3 of 4 in current phase — COMPLETE
+Status: 04-03 complete — portal link card on job detail page (CopyButton + portalUrl + SideCard)
+Last activity: 2026-03-09 — 04-03 complete (Customer Portal Link SideCard in job detail right sidebar)
 
 Progress: [███████░░░] 27% (10 of 29 estimated total plans)
 
@@ -63,6 +63,7 @@ Progress: [███████░░░] 27% (10 of 29 estimated total plans)
 | Phase 03-job-detail-views-search P01 | 12 min | 2 tasks | 2 files |
 | Phase 03-job-detail-views-search P02 | 3 | 2 tasks | 5 files |
 | Phase 04-customer-portal P01 | 2 min | 2 tasks | 3 files |
+| Phase 04-customer-portal P03 | 3 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -111,6 +112,9 @@ Recent decisions affecting current work:
 - [Phase 04-customer-portal P01]: portal_token uses UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE — DB auto-populates, no application code needed on job creation
 - [Phase 04-customer-portal P01]: Insert shape excludes portal_token from Omit and re-adds as optional — callers not forced to provide token DB handles automatically
 - [Phase 04-customer-portal P01]: persistSession: false added to createServiceClient — prevents auth state caching in unauthenticated portal server renders
+- [Phase 04-customer-portal]: page.tsx uses select('*') so portal_token included automatically — no query change needed
+- [Phase 04-customer-portal]: CopyButton defined as module-level function in job-detail-client.tsx (already 'use client') rather than a separate file
+- [Phase 04-customer-portal]: portalUrl constructed client-side from NEXT_PUBLIC_URL env var + job.portal_token
 
 ### Pending Todos
 
@@ -125,5 +129,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Completed 04-01-PLAN.md — portal_token migration, Job interface updated, service client hardened
+Stopped at: Completed 04-03-PLAN.md — portal link card on job detail page
 Resume file: None
