@@ -54,6 +54,7 @@ export interface Job {
   social_media_consent: boolean
   photo_paths: string[]
   notes: string | null
+  portal_token: string  // UUID — credential for the public customer portal URL
   is_overdue?: boolean  // computed column: estimated_completion_date < CURRENT_DATE (not stored in DB)
   created_at: string
   updated_at: string
@@ -85,9 +86,10 @@ export interface Database {
       }
       jobs: {
         Row: Job
-        Insert: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'job_number' | 'is_overdue'> & {
+        Insert: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'job_number' | 'is_overdue' | 'portal_token'> & {
           id?: string
           job_number?: number
+          portal_token?: string
         }
         Update: Partial<Omit<Job, 'id' | 'shop_id' | 'created_at' | 'is_overdue'>>
         Relationships: []
