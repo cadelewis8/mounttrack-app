@@ -36,7 +36,8 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/signup') ||
     pathname.startsWith('/forgot-password') ||
     pathname.startsWith('/update-password') ||
-    pathname.startsWith('/auth/')
+    pathname.startsWith('/auth/') ||
+    pathname.startsWith('/portal/')
 
   if (!userId) {
     if (!isAuthRoute) {
