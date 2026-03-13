@@ -220,7 +220,9 @@ export async function deleteJob(jobId: string): Promise<{ error?: string }> {
   return {}
 }
 
-// Append newly uploaded photo paths to an existing job's photo_paths array
+// Append newly uploaded photo paths to an existing job.
+// Dual-writes: updates photo_paths[] on jobs (owner detail page) and
+// inserts into job_photos with the job's current stage_id (portal grouping).
 export async function addJobPhotos(jobId: string, newPaths: string[]): Promise<{ error?: string }> {
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()
@@ -228,25 +230,39 @@ export async function addJobPhotos(jobId: string, newPaths: string[]): Promise<{
   if (!userId) return { error: 'Not authenticated' }
   if (!newPaths.length) return {}
 
-  // Fetch existing photo_paths first
+  // Fetch existing photo_paths and current stage_id together
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: job, error: fetchError } = await (supabase.from('jobs') as any)
-    .select('photo_paths')
+    .select('photo_paths, stage_id')
     .eq('id', jobId)
     .eq('shop_id', userId)
-    .single() as { data: { photo_paths: string[] } | null; error: { message: string } | null }
+    .single() as { data: { photo_paths: string[]; stage_id: string | null } | null; error: { message: string } | null }
 
   if (fetchError || !job) return { error: fetchError?.message ?? 'Job not found' }
 
   const merged = [...(job.photo_paths ?? []), ...newPaths]
 
+  // Update flat array on job (owner detail page reads from here)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { error } = await (supabase.from('jobs') as any)
+  const { error: updateError } = await (supabase.from('jobs') as any)
     .update({ photo_paths: merged })
     .eq('id', jobId)
     .eq('shop_id', userId) as { error: { message: string } | null }
 
-  if (error) return { error: error.message }
+  if (updateError) return { error: updateError.message }
+
+  // Insert into job_photos with the current stage so portal can group by stage
+  const photoRows = newPaths.map((path) => ({
+    shop_id: userId,
+    job_id: jobId,
+    stage_id: job.stage_id,
+    path,
+  }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error: insertError } = await (supabase.from('job_photos') as any)
+    .insert(photoRows) as { error: { message: string } | null }
+
+  if (insertError) return { error: insertError.message }
 
   revalidatePath(`/jobs/${jobId}`)
   return {}

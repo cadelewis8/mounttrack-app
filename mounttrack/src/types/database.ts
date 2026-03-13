@@ -60,6 +60,15 @@ export interface Job {
   updated_at: string
 }
 
+export interface JobPhoto {
+  id: string
+  shop_id: string
+  job_id: string
+  stage_id: string | null  // null = uploaded before stage tracking, or stage deleted
+  path: string
+  uploaded_at: string
+}
+
 export interface JobNumberSeq {
   shop_id: string
   last_number: number
@@ -92,6 +101,12 @@ export interface Database {
           portal_token?: string
         }
         Update: Partial<Omit<Job, 'id' | 'shop_id' | 'created_at' | 'is_overdue'>>
+        Relationships: []
+      }
+      job_photos: {
+        Row: JobPhoto
+        Insert: Omit<JobPhoto, 'id' | 'uploaded_at'> & { id?: string; uploaded_at?: string }
+        Update: Partial<Omit<JobPhoto, 'id' | 'shop_id' | 'job_id'>>
         Relationships: []
       }
       job_number_seq: {
