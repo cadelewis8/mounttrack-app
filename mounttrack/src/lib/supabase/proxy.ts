@@ -36,11 +36,13 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/signup') ||
     pathname.startsWith('/forgot-password') ||
     pathname.startsWith('/update-password') ||
-    pathname.startsWith('/auth/') ||
-    pathname.startsWith('/portal/')
+    pathname.startsWith('/auth/')
+
+  // Public routes: no login required, authenticated users pass through unchanged
+  const isPublicRoute = pathname.startsWith('/portal/')
 
   if (!userId) {
-    if (!isAuthRoute) {
+    if (!isAuthRoute && !isPublicRoute) {
       const url = request.nextUrl.clone()
       url.pathname = '/login'
       return NextResponse.redirect(url)
