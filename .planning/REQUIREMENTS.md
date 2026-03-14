@@ -74,11 +74,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Payments (PAY)
 
-- [ ] **PAY-01**: Customer can pay their remaining balance via Stripe on the customer portal
-- [ ] **PAY-02**: Customer can make a partial payment (not required to pay full balance at once)
+- [x] **PAY-01**: Customer can pay their remaining balance via Stripe on the customer portal
+- [x] **PAY-02**: Customer can make a partial payment (not required to pay full balance at once)
 - [ ] **PAY-03**: A payment link is automatically sent to the customer via SMS and email when their job reaches "Ready for Pickup" stage
 - [ ] **PAY-04**: Owner can manually trigger a payment request to a customer at any point from the job detail page
-- [ ] **PAY-05**: Owner can view all payments, deposits, and outstanding balance per job
+- [x] **PAY-05**: Owner can view all payments, deposits, and outstanding balance per job
 - [ ] **PAY-06**: Owner dashboard shows total outstanding balance across all active jobs
 
 ### Notifications (NOTIF)
@@ -220,11 +220,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PORTAL-06 | Phase 4 | Complete |
 | PORTAL-07 | Phase 4 | Complete |
 | PORTAL-08 | Phase 4 | Complete |
-| PAY-01 | Phase 5 | Pending |
-| PAY-02 | Phase 5 | Pending |
+| PAY-01 | Phase 5 | Complete |
+| PAY-02 | Phase 5 | Complete |
 | PAY-03 | Phase 5 | Pending |
 | PAY-04 | Phase 5 | Pending |
-| PAY-05 | Phase 5 | Pending |
+| PAY-05 | Phase 5 | Complete |
 | PAY-06 | Phase 5 | Pending |
 | NOTIF-01 | Phase 6 | Pending |
 | NOTIF-02 | Phase 6 | Pending |

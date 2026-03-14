@@ -145,6 +145,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 2. Job Intake & Board | 4/5 | In Progress|  |
 | 3. Job Detail, Views & Search | 2/3 | In Progress|  |
 | 4. Customer Portal | 3/3 | Complete   | 2026-03-09 |
-| 5. Payments | 0/TBD | Not started | - |
+| 5. Payments | 1/5 | In Progress|  |
 | 6. Notifications & Waitlist | 0/TBD | Not started | - |
 | 7. Reports, Supply, Post-Completion & Social | 0/TBD | Not started | - |

@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-13T02:51:05.015Z"
+last_updated: "2026-03-14T02:17:32.913Z"
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 20
+  completed_plans: 16
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-01)
 
 **Core value:** A taxidermy shop owner can intake a job, drag it through production stages, and have the customer automatically kept informed and able to pay — without the owner picking up the phone.
-**Current focus:** Phase 3 — Job Detail Views & Search
+**Current focus:** Phase 5 — Payments
 
 ## Current Position
 
-Phase: 4 of 7 (Customer Portal) — IN PROGRESS
-Plan: 3 of 4 in current phase — COMPLETE
-Status: 04-03 complete — portal link card on job detail page (CopyButton + portalUrl + SideCard)
-Last activity: 2026-03-09 — 04-03 complete (Customer Portal Link SideCard in job detail right sidebar)
+Phase: 5 of 7 (Payments) — IN PROGRESS
+Plan: 1 of 5 in current phase — COMPLETE
+Status: 05-01 complete — payments table migration, Payment TypeScript type, proxy exemption for /api/create-payment-session
+Last activity: 2026-03-13 — 05-01 complete (payments foundation: DB schema + types + auth gate exemption)
 
-Progress: [███████░░░] 27% (10 of 29 estimated total plans)
+Progress: [████████░░] 35% (16 of 29 estimated total plans)
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [███████░░░] 27% (10 of 29 estimated total plans)
 | Phase 04-customer-portal P01 | 2 min | 2 tasks | 3 files |
 | Phase 04-customer-portal P03 | 3 | 1 tasks | 1 files |
 | Phase 04-customer-portal P02 | 2 | 2 tasks | 5 files |
+| Phase 05-payments P01 | 5 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -120,6 +121,9 @@ Recent decisions affecting current work:
 - [Phase 04-customer-portal]: notFound() called uniformly for any token lookup failure — prevents oracle attacks
 - [Phase 04-customer-portal]: --brand CSS custom property set on portal root div — Server and Client Components consume via [var(--brand)] Tailwind classes without JS
 - [Phase 04-customer-portal]: Native <dialog> for photo lightbox — showModal() handles focus trapping, Escape key, and backdrop accessibility; zero npm dependencies
+- [Phase 05-payments]: payments table uses shop_id directly (not only via job FK) for efficient dashboard SUM without join and direct RLS compliance
+- [Phase 05-payments]: No status field on payments — only confirmed payments inserted via webhook; deposit stays on jobs.deposit_amount not in payments table
+- [Phase 05-payments]: /api/create-payment-session exempted via isPublicRoute in proxy.ts (same pattern as /portal/) not via matcher exclusion
 
 ### Pending Todos
 
@@ -133,6 +137,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09
-Stopped at: Completed 04-03-PLAN.md — portal link card on job detail page
+Last session: 2026-03-13
+Stopped at: Completed 05-01-PLAN.md — payments table migration, Payment type, proxy exemption
 Resume file: None
