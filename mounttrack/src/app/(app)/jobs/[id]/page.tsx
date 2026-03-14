@@ -46,11 +46,19 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
     photoUrls = results.filter((r): r is { path: string; url: string } => r !== null)
   }
 
+  // Fetch Stripe payments for this job (owner view)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: jobPayments } = await (supabase.from('payments') as any)
+    .select('amount_cents, paid_at')
+    .eq('job_id', job.id)
+    .order('paid_at', { ascending: true }) as { data: { amount_cents: number; paid_at: string }[] | null }
+
   return (
     <JobDetailClient
       job={{ ...job, is_overdue: isOverdue }}
       stages={stages}
       photoUrls={photoUrls}
+      jobPayments={jobPayments ?? []}
     />
   )
 }

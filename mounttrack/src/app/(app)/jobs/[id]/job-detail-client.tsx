@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Zap, Trash2, Camera } from 'lucide-react'
 import { updateJob, toggleJobRush, updateJobStage, deleteJob, addJobPhotos } from '@/actions/jobs'
+import { sendPaymentRequest } from '@/actions/payments'
 import { PhotoUploadZone } from '@/components/photo-upload-zone'
 import type { PhotoUploadZoneHandle } from '@/components/photo-upload-zone'
 import type { Job, Stage } from '@/types/database'
@@ -31,6 +32,7 @@ interface JobDetailClientProps {
   job: Job & { is_overdue: boolean }
   stages: Stage[]
   photoUrls: { path: string; url: string }[]
+  jobPayments: { amount_cents: number; paid_at: string }[]
 }
 
 function CopyButton({ value }: { value: string }) {
@@ -53,7 +55,7 @@ function CopyButton({ value }: { value: string }) {
   )
 }
 
-export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps) {
+export function JobDetailClient({ job, stages, photoUrls, jobPayments }: JobDetailClientProps) {
   const router = useRouter()
   const [isRush, setIsRush] = useState(job.is_rush)
   const [stageId, setStageId] = useState(job.stage_id ?? '')
@@ -419,6 +421,11 @@ export function JobDetailClient({ job, stages, photoUrls }: JobDetailClientProps
                   </div>
                 </div>
               </SideCard>
+
+              {/* Payments */}
+              <SideCard title="Payments">
+                <PaymentsSection job={job} jobPayments={jobPayments} />
+              </SideCard>
             </div>
 
           </div>
@@ -471,6 +478,75 @@ function Row({ label, value }: { label: string; value: string }) {
     <div className="flex justify-between">
       <span className="text-muted-foreground">{label}</span>
       <span>{value}</span>
+    </div>
+  )
+}
+
+function PaymentsSection({
+  job,
+  jobPayments,
+}: {
+  job: Job & { is_overdue: boolean }
+  jobPayments: { amount_cents: number; paid_at: string }[]
+}) {
+  const [sending, setSending] = useState(false)
+  const [sendResult, setSendResult] = useState<{ success?: boolean; error?: string } | null>(null)
+
+  const totalStripePaid = jobPayments.reduce((s, p) => s + p.amount_cents, 0) / 100
+  const outstanding = job.quoted_price - (job.deposit_amount ?? 0) - totalStripePaid
+
+  function fmtMoney(n: number) {
+    return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  }
+
+  function fmtPaymentDate(iso: string) {
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  }
+
+  async function handleSendRequest() {
+    setSending(true)
+    setSendResult(null)
+    const result = await sendPaymentRequest(job.id)
+    setSending(false)
+    setSendResult(result.error ? { error: result.error } : { success: true })
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="space-y-1 text-sm">
+        <div className="flex justify-between text-muted-foreground">
+          <span>Quoted</span>
+          <span className="tabular-nums">{fmtMoney(job.quoted_price)}</span>
+        </div>
+        <div className="flex justify-between text-muted-foreground">
+          <span>Deposit</span>
+          <span className="tabular-nums">−{fmtMoney(job.deposit_amount ?? 0)}</span>
+        </div>
+        {jobPayments.map((p, i) => (
+          <div key={i} className="flex justify-between text-muted-foreground">
+            <span>Payment ({fmtPaymentDate(p.paid_at)})</span>
+            <span className="tabular-nums">−{fmtMoney(p.amount_cents / 100)}</span>
+          </div>
+        ))}
+        <div className="border-t pt-2 flex justify-between font-semibold">
+          <span>Outstanding</span>
+          <span className="tabular-nums">{fmtMoney(Math.max(outstanding, 0))}</span>
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={handleSendRequest}
+        disabled={sending || outstanding <= 0}
+        className="w-full px-3 py-2 rounded-md border text-sm font-medium hover:bg-muted disabled:opacity-50 transition-colors"
+      >
+        {sending ? 'Sending\u2026' : 'Send Payment Request'}
+      </button>
+      {sendResult?.success && (
+        <p className="text-xs text-green-600 dark:text-green-400">Payment request sent.</p>
+      )}
+      {sendResult?.error && (
+        <p className="text-xs text-red-500">{sendResult.error}</p>
+      )}
     </div>
   )
 }
