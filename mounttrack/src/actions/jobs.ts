@@ -184,6 +184,29 @@ export async function updateJobStage(jobId: string, stageId: string): Promise<{ 
     .eq('shop_id', userId) as { error: { message: string } | null }
 
   if (error) return { error: error.message }
+
+  // PAY-03: Detect "Ready for Pickup" stage and trigger payment link delivery.
+  // NOTE: Matches by stage name — if owner renames this stage, trigger silently skips.
+  // TODO Phase 6: Replace console.log with Twilio SMS + Resend email delivery.
+  const [stageRes, jobRes] = await Promise.all([
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('stages') as any)
+      .select('name')
+      .eq('id', stageId)
+      .single() as Promise<{ data: { name: string } | null }>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('jobs') as any)
+      .select('portal_token')
+      .eq('id', jobId)
+      .single() as Promise<{ data: { portal_token: string } | null }>,
+  ])
+
+  if (stageRes.data?.name === 'Ready for Pickup' && jobRes.data?.portal_token) {
+    const portalUrl = `${process.env.NEXT_PUBLIC_URL}/portal/${jobRes.data.portal_token}`
+    // TODO Phase 6: send SMS via Twilio + email via Resend using portalUrl as payment link
+    console.log(`[PAY-03] Job ${jobId} reached "Ready for Pickup" — payment link: ${portalUrl}`)
+  }
+
   return {}
 }
 
