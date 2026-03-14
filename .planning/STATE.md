@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T02:22:28.821Z"
+last_updated: "2026-03-14T02:26:27.655Z"
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 20
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 5 of 7 (Payments) — IN PROGRESS
-Plan: 3 of 5 in current phase — COMPLETE
-Status: 05-03 complete — Ready for Pickup trigger stub in updateJobStage, dashboard balanceDue corrected with Stripe payments
-Last activity: 2026-03-13 — 05-03 complete (PAY-03 trigger stub + PAY-06 dashboard balance formula)
+Plan: 5 of 5 in current phase — COMPLETE
+Status: 05-05 complete — owner Payments SideCard in job detail (PAY-05) + sendPaymentRequest action stub (PAY-04)
+Last activity: 2026-03-13 — 05-05 complete (PAY-04 + PAY-05 owner payment visibility)
 
 Progress: [████████░░] 38% (18 of 29 estimated total plans)
 
@@ -68,6 +68,8 @@ Progress: [████████░░] 38% (18 of 29 estimated total plans)
 | Phase 05-payments P01 | 5 | 2 tasks | 3 files |
 | Phase 05-payments P03 | 2 | 2 tasks | 2 files |
 | Phase 05-payments P02 | 2 | 2 tasks | 2 files |
+| Phase 05-payments P04 | 2 min | 2 tasks | 2 files |
+| Phase 05-payments P05 | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -130,6 +132,10 @@ Recent decisions affecting current work:
 - [Phase 05-payments]: Application-layer reduce for payments SUM — Supabase JS GenericSchema workaround
 - [Phase 05-payments]: session.subscription discriminates checkout types — non-null for subscription checkouts, null for one-time job payments
 - [Phase 05-payments]: Server re-validates amountCents against DB-computed remaining balance — client-supplied financial amounts never trusted
+- [Phase 05-payments]: PaymentCard has no paymentSuccess prop — success banner is page-level JSX, visible even after full payment zeroes remainingCents
+- [Phase 05-payments]: Amount input uses native number type + useState validation — avoids react-hook-form dependency for one-field form
+- [Phase 05-payments]: PaymentsSection defined inline in job-detail-client.tsx alongside existing helpers — no separate file needed
+- [Phase 05-payments]: Send Payment Request button disabled when outstanding <= 0 — prevents sending request when balance is cleared
 
 ### Pending Todos
 
@@ -144,5 +150,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 05-03-PLAN.md — Ready for Pickup trigger stub + dashboard balance formula
+Stopped at: Completed 05-05-PLAN.md — owner payment visibility (PAY-05) + manual request trigger (PAY-04)
 Resume file: None
