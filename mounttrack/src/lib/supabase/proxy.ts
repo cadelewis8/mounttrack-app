@@ -39,7 +39,8 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/auth/')
 
   // Public routes: no login required, authenticated users pass through unchanged
-  const isPublicRoute = pathname.startsWith('/portal/')
+  const isPublicRoute = pathname.startsWith('/portal/') ||
+    pathname.startsWith('/api/create-payment-session')
 
   if (!userId) {
     if (!isAuthRoute && !isPublicRoute) {

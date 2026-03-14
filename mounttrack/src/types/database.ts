@@ -74,6 +74,16 @@ export interface JobNumberSeq {
   last_number: number
 }
 
+export interface Payment {
+  id: string
+  shop_id: string
+  job_id: string
+  stripe_session_id: string
+  stripe_payment_intent_id: string | null
+  amount_cents: number
+  paid_at: string  // ISO timestamp string
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -113,6 +123,12 @@ export interface Database {
         Row: JobNumberSeq
         Insert: JobNumberSeq
         Update: Partial<JobNumberSeq>
+        Relationships: []
+      }
+      payments: {
+        Row: Payment
+        Insert: Omit<Payment, 'id' | 'paid_at'> & { id?: string; paid_at?: string }
+        Update: Partial<Omit<Payment, 'id' | 'shop_id' | 'job_id'>>
         Relationships: []
       }
     }
