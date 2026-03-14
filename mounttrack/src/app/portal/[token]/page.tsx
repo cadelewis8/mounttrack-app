@@ -3,6 +3,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { StageTimeline } from '@/components/portal/stage-timeline'
 import { PortalHeader } from '@/components/portal/portal-header'
 import { PortalAutoRefresh } from '@/components/portal/portal-auto-refresh'
+import { PaymentCard } from '@/components/portal/payment-card'
 import type { Job, Shop, Stage } from '@/types/database'
 
 type PortalJob = Omit<Job, 'is_overdue'> & { shops: Shop }
@@ -22,10 +23,14 @@ async function getSignedPhotoUrls(
 
 export default async function PortalPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ token: string }>
+  searchParams: Promise<{ payment?: string }>
 }) {
   const { token } = await params
+  const { payment } = await searchParams
+  const paymentSuccess = payment === 'success'
   const supabase = createServiceClient()
 
   // Look up job by portal_token — service role bypasses RLS, no auth session needed
@@ -49,6 +54,19 @@ export default async function PortalPage({
     .select('id, stage_id, path')
     .eq('job_id', job.id)
     .order('uploaded_at', { ascending: true }) as { data: { id: string; stage_id: string | null; path: string }[] | null }
+
+  // Query payments for this job to compute remaining balance
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: payments } = await (supabase.from('payments') as any)
+    .select('amount_cents, paid_at')
+    .eq('job_id', job.id)
+    .order('paid_at', { ascending: true }) as { data: { amount_cents: number; paid_at: string }[] | null }
+
+  const priorPayments = payments ?? []
+  const totalStripePaymentsCents = priorPayments.reduce((s, p) => s + p.amount_cents, 0)
+  const quotedCents = Math.round(job.quoted_price * 100)
+  const depositCents = Math.round((job.deposit_amount ?? 0) * 100)
+  const remainingCents = quotedCents - depositCents - totalStripePaymentsCents
 
   // Batch-sign all photo paths in one request, then re-map back to stages
   const allPaths = (jobPhotos ?? []).map((p) => p.path)
@@ -110,6 +128,29 @@ export default async function PortalPage({
             stagePhotos={stagePhotos}
           />
         </div>
+
+        {/* Success banner — shown whenever ?payment=success, regardless of remaining balance.
+            IMPORTANT: rendered independently of PaymentCard so it appears even after a full
+            payment zeros the balance and PaymentCard is hidden. */}
+        {paymentSuccess && (
+          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-4 flex items-center gap-3">
+            <svg className="h-5 w-5 text-green-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <p className="text-sm font-medium text-green-800">Payment received — thank you!</p>
+          </div>
+        )}
+
+        {/* Payment card — only shown when balance remains */}
+        {remainingCents > 0 && (
+          <PaymentCard
+            portalToken={token}
+            quotedCents={quotedCents}
+            depositCents={depositCents}
+            priorPayments={priorPayments}
+            remainingCents={remainingCents}
+          />
+        )}
       </main>
 
       {/* Minimal footer — shop name only, no MountTrack branding */}
