@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T02:17:32.913Z"
+last_updated: "2026-03-14T02:22:28.821Z"
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 20
-  completed_plans: 16
+  completed_plans: 18
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 5 of 7 (Payments) — IN PROGRESS
-Plan: 1 of 5 in current phase — COMPLETE
-Status: 05-01 complete — payments table migration, Payment TypeScript type, proxy exemption for /api/create-payment-session
-Last activity: 2026-03-13 — 05-01 complete (payments foundation: DB schema + types + auth gate exemption)
+Plan: 3 of 5 in current phase — COMPLETE
+Status: 05-03 complete — Ready for Pickup trigger stub in updateJobStage, dashboard balanceDue corrected with Stripe payments
+Last activity: 2026-03-13 — 05-03 complete (PAY-03 trigger stub + PAY-06 dashboard balance formula)
 
-Progress: [████████░░] 35% (16 of 29 estimated total plans)
+Progress: [████████░░] 38% (18 of 29 estimated total plans)
 
 ## Performance Metrics
 
@@ -66,6 +66,8 @@ Progress: [████████░░] 35% (16 of 29 estimated total plans)
 | Phase 04-customer-portal P03 | 3 | 1 tasks | 1 files |
 | Phase 04-customer-portal P02 | 2 | 2 tasks | 5 files |
 | Phase 05-payments P01 | 5 | 2 tasks | 3 files |
+| Phase 05-payments P03 | 2 | 2 tasks | 2 files |
+| Phase 05-payments P02 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -124,6 +126,10 @@ Recent decisions affecting current work:
 - [Phase 05-payments]: payments table uses shop_id directly (not only via job FK) for efficient dashboard SUM without join and direct RLS compliance
 - [Phase 05-payments]: No status field on payments — only confirmed payments inserted via webhook; deposit stays on jobs.deposit_amount not in payments table
 - [Phase 05-payments]: /api/create-payment-session exempted via isPublicRoute in proxy.ts (same pattern as /portal/) not via matcher exclusion
+- [Phase 05-payments]: PAY-03 stage name match === 'Ready for Pickup' (v1 acceptable, silently skips if renamed)
+- [Phase 05-payments]: Application-layer reduce for payments SUM — Supabase JS GenericSchema workaround
+- [Phase 05-payments]: session.subscription discriminates checkout types — non-null for subscription checkouts, null for one-time job payments
+- [Phase 05-payments]: Server re-validates amountCents against DB-computed remaining balance — client-supplied financial amounts never trusted
 
 ### Pending Todos
 
@@ -138,5 +144,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 05-01-PLAN.md — payments table migration, Payment type, proxy exemption
+Stopped at: Completed 05-03-PLAN.md — Ready for Pickup trigger stub + dashboard balance formula
 Resume file: None
