@@ -34,7 +34,7 @@ export function PaymentCard({
     const num = parseFloat(value)
     if (isNaN(num) || value === '') return null
     if (num < 50) return 'Minimum payment is $50.00'
-    if (num > remainingCents / 100) {
+    if (Math.round(num * 100) > remainingCents) {
       return `Amount cannot exceed remaining balance of ${fmtMoney(remainingCents)}`
     }
     return null
