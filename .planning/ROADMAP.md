@@ -102,7 +102,14 @@ Plans:
   2. A payment link is automatically sent to the customer when their job reaches "Ready for Pickup" stage; the owner can also manually trigger a payment request from the job detail page at any time
   3. Owner can view all payments, deposits, and the outstanding balance for any individual job
   4. Owner dashboard shows the total outstanding balance across all active jobs
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — payments table migration + Payment type + proxy route exemption
+- [ ] 05-02-PLAN.md — Stripe Checkout session API route + webhook extension for job payments
+- [ ] 05-03-PLAN.md — PAY-03 Ready for Pickup trigger stub + PAY-06 dashboard balance formula update
+- [ ] 05-04-PLAN.md — Portal PaymentCard component + extend portal page with payments data
+- [ ] 05-05-PLAN.md — Owner job detail PaymentsSection + sendPaymentRequest server action
 
 ### Phase 6: Notifications & Waitlist
 **Goal**: Every stage change automatically triggers branded, shop-identity communications to the customer — and the owner can place customers on a pre-intake waitlist that immediately confirms their spot via SMS.
