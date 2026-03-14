@@ -33,9 +33,13 @@ export function PaymentCard({
   function validate(value: string): string | null {
     const num = parseFloat(value)
     if (isNaN(num) || value === '') return null
-    if (num < 50) return 'Minimum payment is $50.00'
-    if (Math.round(num * 100) > remainingCents) {
+    const amountCents = Math.round(num * 100)
+    if (amountCents > remainingCents) {
       return `Amount cannot exceed remaining balance of ${fmtMoney(remainingCents)}`
+    }
+    // $50 minimum only applies to partial payments — full balance is always allowed
+    if (amountCents < 5000 && amountCents < remainingCents) {
+      return 'Minimum payment is $50.00'
     }
     return null
   }
@@ -131,8 +135,6 @@ export function PaymentCard({
           id="payment-amount"
           type="number"
           step="0.01"
-          min="50"
-          max={remainingCents / 100}
           value={amountDollars}
           onChange={handleAmountChange}
           placeholder="0.00"

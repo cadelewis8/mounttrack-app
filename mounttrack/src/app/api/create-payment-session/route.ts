@@ -51,11 +51,12 @@ export async function POST(req: NextRequest) {
   const depositCents = Math.round((job.deposit_amount ?? 0) * 100)
   const remainingCents = quotedCents - depositCents - totalPaidCents
 
-  if (amountCents < 5000) {
-    return NextResponse.json({ error: 'Minimum payment is $50.00' }, { status: 400 })
-  }
   if (amountCents > remainingCents) {
     return NextResponse.json({ error: 'Amount exceeds remaining balance' }, { status: 400 })
+  }
+  // $50 minimum only applies to partial payments — allow any amount that clears the balance
+  if (amountCents < 5000 && amountCents < remainingCents) {
+    return NextResponse.json({ error: 'Minimum payment is $50.00' }, { status: 400 })
   }
 
   const session = await stripe.checkout.sessions.create({
