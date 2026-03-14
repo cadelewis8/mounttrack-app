@@ -28,20 +28,55 @@ export async function POST(req: Request) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object
-        const shopId = session.metadata?.shop_id
-        if (!shopId) {
-          console.warn('checkout.session.completed: no shop_id in metadata — skipping')
+
+        if (session.subscription) {
+          // ── Existing subscription flow (unchanged) ──
+          const shopId = session.metadata?.shop_id
+          if (!shopId) {
+            console.warn('checkout.session.completed: no shop_id in metadata — skipping')
+            break
+          }
+          const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (supabase.from('shops') as any).update({
+            stripe_customer_id: session.customer as string,
+            stripe_subscription_id: subscription.id,
+            subscription_status: subscription.status as SubscriptionStatus,
+            onboarding_step: 2,
+          }).eq('id', shopId)
           break
         }
-        // Fetch full subscription to get status
-        const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+
+        // ── Job payment flow ──
+        const jobId = session.metadata?.job_id
+        if (!jobId) {
+          console.warn('checkout.session.completed: no job_id in metadata — skipping')
+          break
+        }
+
+        // Verify payment actually completed (guard for async edge cases)
+        if (session.payment_status !== 'paid') {
+          console.warn(`checkout.session.completed: payment_status is ${session.payment_status} — skipping`)
+          break
+        }
+
+        // Idempotency check — stripe_session_id UNIQUE prevents duplicates at DB level,
+        // but check first to avoid unnecessary insert attempts on webhook retries
+        const { data: existing } = await (supabase.from('payments') as any)
+          .select('id')
+          .eq('stripe_session_id', session.id)
+          .maybeSingle() as { data: { id: string } | null }
+
+        if (existing) break  // already processed
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (supabase.from('shops') as any).update({
-          stripe_customer_id: session.customer as string,
-          stripe_subscription_id: subscription.id,
-          subscription_status: subscription.status as SubscriptionStatus,
-          onboarding_step: 2,  // Wizard complete
-        }).eq('id', shopId)
+        await (supabase.from('payments') as any).insert({
+          job_id: jobId,
+          shop_id: session.metadata?.shop_id,
+          stripe_session_id: session.id,
+          stripe_payment_intent_id: session.payment_intent as string | null,
+          amount_cents: session.amount_total ?? 0,
+        })
         break
       }
 
