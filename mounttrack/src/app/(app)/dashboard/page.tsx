@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const userId = data?.claims?.sub ?? null
   if (!userId) redirect('/login')
 
-  const [jobsRes, stagesRes] = await Promise.all([
+  const [jobsRes, stagesRes, paymentsRes] = await Promise.all([
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (supabase.from('jobs') as any)
       .select('id, job_number, customer_name, animal_type, stage_id, quoted_price, deposit_amount, estimated_completion_date, is_rush, created_at')
@@ -33,10 +33,15 @@ export default async function DashboardPage() {
       .select('id, name, position')
       .eq('shop_id', userId)
       .order('position', { ascending: true }) as Promise<{ data: Stage[] | null }>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('payments') as any)
+      .select('amount_cents')
+      .eq('shop_id', userId) as Promise<{ data: { amount_cents: number }[] | null }>,
   ])
 
   const jobs = jobsRes.data ?? []
   const stages = stagesRes.data ?? []
+  const paymentsData = paymentsRes.data ?? []
 
   const todayStr = new Date().toISOString().slice(0, 10)
   const in14 = new Date()
@@ -49,7 +54,8 @@ export default async function DashboardPage() {
   const rushCount = jobs.filter((j) => j.is_rush).length
   const totalQuoted = jobs.reduce((s, j) => s + j.quoted_price, 0)
   const totalDeposits = jobs.reduce((s, j) => s + (j.deposit_amount ?? 0), 0)
-  const balanceDue = totalQuoted - totalDeposits
+  const totalStripePaid = paymentsData.reduce((s, p) => s + p.amount_cents, 0) / 100
+  const balanceDue = totalQuoted - totalDeposits - totalStripePaid
 
   // Jobs per stage
   const jobsByStage = stages.map((s) => ({
