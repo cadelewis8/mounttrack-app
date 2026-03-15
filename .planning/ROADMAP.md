@@ -119,7 +119,12 @@ Plans:
   1. Every time a job moves to a new stage, the customer automatically receives a branded SMS (via Twilio) and a branded email (via Resend) — both show the shop's name and logo with no MountTrack branding
   2. Customer can opt out of SMS by replying STOP; the opt-out is recorded and respected on all future messages (A2P 10DLC compliant)
   3. Owner can add a customer to a pre-intake waitlist with their name, phone, and animal type; the waitlisted customer immediately receives a branded SMS confirming they are on the list
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — DB migration (sms_opted_out column + notifications + waitlist tables) + TypeScript types + npm install
+- [ ] 06-02-PLAN.md — notifications.ts helper + StageUpdateEmail template + wire updateJobStage/bulkMoveJobs/sendPaymentRequest + Twilio STOP webhook
+- [ ] 06-03-PLAN.md — Waitlist server actions + /waitlist page + nav link + sms_opted_out badge on job detail
 
 ### Phase 7: Reports, Supply, Post-Completion & Social
 **Goal**: The owner has operational visibility into revenue, outstanding balances, animal volume, and referral sources — plus supply reminders, post-pickup automation for reviews and ratings, PDF receipts for paid customers, and social media consent tracking.
@@ -146,5 +151,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Job Detail, Views & Search | 2/3 | In Progress|  |
 | 4. Customer Portal | 3/3 | Complete   | 2026-03-09 |
 | 5. Payments | 5/5 | Complete   | 2026-03-14 |
-| 6. Notifications & Waitlist | 0/TBD | Not started | - |
+| 6. Notifications & Waitlist | 0/3 | Not started | - |
 | 7. Reports, Supply, Post-Completion & Social | 0/TBD | Not started | - |
