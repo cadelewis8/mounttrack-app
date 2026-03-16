@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import type { Stage } from '@/types/database'
+import { sendStageNotification } from '@/lib/notifications'
 
 type JobState = { error: string } | { success: true } | undefined
 
@@ -185,10 +186,8 @@ export async function updateJobStage(jobId: string, stageId: string): Promise<{ 
 
   if (error) return { error: error.message }
 
-  // PAY-03: Detect "Ready for Pickup" stage and trigger payment link delivery.
-  // NOTE: Matches by stage name — if owner renames this stage, trigger silently skips.
-  // TODO Phase 6: Replace console.log with Twilio SMS + Resend email delivery.
-  const [stageRes, jobRes] = await Promise.all([
+  // Phase 6: Fetch stage, job (notification fields), and shop branding in parallel
+  const [stageRes, jobRes, shopRes] = await Promise.all([
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (supabase.from('stages') as any)
       .select('name')
@@ -196,15 +195,35 @@ export async function updateJobStage(jobId: string, stageId: string): Promise<{ 
       .single() as Promise<{ data: { name: string } | null }>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (supabase.from('jobs') as any)
-      .select('portal_token')
+      .select('customer_name, customer_phone, customer_email, portal_token, sms_opted_out')
       .eq('id', jobId)
-      .single() as Promise<{ data: { portal_token: string } | null }>,
+      .single() as Promise<{ data: { customer_name: string; customer_phone: string | null; customer_email: string | null; portal_token: string; sms_opted_out: boolean } | null }>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('shops') as any)
+      .select('shop_name, logo_url, brand_color')
+      .eq('id', userId)
+      .single() as Promise<{ data: { shop_name: string; logo_url: string | null; brand_color: string } | null }>,
   ])
 
-  if (stageRes.data?.name === 'Ready for Pickup' && jobRes.data?.portal_token) {
+  if (jobRes.data && stageRes.data && shopRes.data) {
     const portalUrl = `${process.env.NEXT_PUBLIC_URL}/portal/${jobRes.data.portal_token}`
-    // TODO Phase 6: send SMS via Twilio + email via Resend using portalUrl as payment link
-    console.log(`[PAY-03] Job ${jobId} reached "Ready for Pickup" — payment link: ${portalUrl}`)
+    try {
+      await sendStageNotification({
+        customerPhone: jobRes.data.customer_phone,
+        customerEmail: jobRes.data.customer_email,
+        smsOptedOut: jobRes.data.sms_opted_out,
+        customerName: jobRes.data.customer_name,
+        stageName: stageRes.data.name,
+        portalUrl,
+        shopName: shopRes.data.shop_name,
+        shopLogoUrl: shopRes.data.logo_url,
+        brandColor: shopRes.data.brand_color,
+        jobId,
+        shopId: userId,
+      })
+    } catch (err) {
+      console.error('[updateJobStage] notification error:', err)
+    }
   }
 
   return {}
@@ -224,6 +243,49 @@ export async function bulkMoveJobs(jobIds: string[], stageId: string): Promise<{
     .eq('shop_id', userId) as { error: { message: string } | null }
 
   if (error) return { error: error.message }
+
+  // Phase 6: Fan-out notifications to all moved jobs
+  const [stageRes, shopRes] = await Promise.all([
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('stages') as any)
+      .select('name')
+      .eq('id', stageId)
+      .single() as Promise<{ data: { name: string } | null }>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase.from('shops') as any)
+      .select('shop_name, logo_url, brand_color')
+      .eq('id', userId)
+      .single() as Promise<{ data: { shop_name: string; logo_url: string | null; brand_color: string } | null }>,
+  ])
+
+  if (stageRes.data && shopRes.data) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const jobsRes = await (supabase.from('jobs') as any)
+      .select('id, customer_name, customer_phone, customer_email, portal_token, sms_opted_out')
+      .in('id', jobIds)
+      .eq('shop_id', userId) as { data: Array<{ id: string; customer_name: string; customer_phone: string | null; customer_email: string | null; portal_token: string; sms_opted_out: boolean }> | null }
+
+    if (jobsRes.data) {
+      await Promise.allSettled(
+        jobsRes.data.map((job) =>
+          sendStageNotification({
+            customerPhone: job.customer_phone,
+            customerEmail: job.customer_email,
+            smsOptedOut: job.sms_opted_out,
+            customerName: job.customer_name,
+            stageName: stageRes.data!.name,
+            portalUrl: `${process.env.NEXT_PUBLIC_URL}/portal/${job.portal_token}`,
+            shopName: shopRes.data!.shop_name,
+            shopLogoUrl: shopRes.data!.logo_url,
+            brandColor: shopRes.data!.brand_color,
+            jobId: job.id,
+            shopId: userId,
+          })
+        )
+      )
+    }
+  }
+
   return {}
 }
 
