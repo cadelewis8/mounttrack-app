@@ -50,8 +50,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Waitlist (WAIT)
 
-- [ ] **WAIT-01**: Owner can add a customer to a pre-intake waitlist with name, phone, and animal type before the animal is dropped off
-- [ ] **WAIT-02**: Waitlisted customer automatically receives a branded SMS confirming they are on the list
+- [x] **WAIT-01**: Owner can add a customer to a pre-intake waitlist with name, phone, and animal type before the animal is dropped off
+- [x] **WAIT-02**: Waitlisted customer automatically receives a branded SMS confirming they are on the list
 
 ### Job Detail (JOB)
 
@@ -83,10 +83,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Notifications (NOTIF)
 
-- [ ] **NOTIF-01**: Every stage change automatically sends the customer a branded SMS via Twilio
-- [ ] **NOTIF-02**: Every stage change automatically sends the customer a branded email via Resend
-- [ ] **NOTIF-03**: All SMS and email notifications display the shop's name and logo — MountTrack branding is never shown to the customer
-- [ ] **NOTIF-04**: Customers can opt out of SMS via STOP keyword; opt-outs are handled and respected (A2P 10DLC compliant)
+- [x] **NOTIF-01**: Every stage change automatically sends the customer a branded SMS via Twilio
+- [x] **NOTIF-02**: Every stage change automatically sends the customer a branded email via Resend
+- [x] **NOTIF-03**: All SMS and email notifications display the shop's name and logo — MountTrack branding is never shown to the customer
+- [x] **NOTIF-04**: Customers can opt out of SMS via STOP keyword; opt-outs are handled and respected (A2P 10DLC compliant)
 
 ### Search & Filters (SEARCH)
 
@@ -205,8 +205,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUEUE-01 | Phase 3 | Complete |
 | QUEUE-02 | Phase 3 | Complete |
 | QUEUE-03 | Phase 3 | Complete |
-| WAIT-01 | Phase 6 | Pending |
-| WAIT-02 | Phase 6 | Pending |
+| WAIT-01 | Phase 6 | Complete |
+| WAIT-02 | Phase 6 | Complete |
 | JOB-01 | Phase 3 | Complete |
 | JOB-02 | Phase 3 | Complete |
 | JOB-03 | Phase 3 | Complete |
@@ -226,10 +226,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAY-04 | Phase 5 | Complete |
 | PAY-05 | Phase 5 | Complete |
 | PAY-06 | Phase 5 | Complete |
-| NOTIF-01 | Phase 6 | Pending |
-| NOTIF-02 | Phase 6 | Pending |
-| NOTIF-03 | Phase 6 | Pending |
-| NOTIF-04 | Phase 6 | Pending |
+| NOTIF-01 | Phase 6 | Complete |
+| NOTIF-02 | Phase 6 | Complete |
+| NOTIF-03 | Phase 6 | Complete |
+| NOTIF-04 | Phase 6 | Complete |
 | SEARCH-01 | Phase 3 | Complete |
 | SEARCH-02 | Phase 3 | Complete |
 | SUPPLY-01 | Phase 7 | Pending |
