@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { CalendarDays, LayoutDashboard, LayoutGrid, List, Plus, Search, Settings } from 'lucide-react'
+import { CalendarDays, Clock, LayoutDashboard, LayoutGrid, List, Plus, Search, Settings } from 'lucide-react'
 
 const links = [
   { href: '/dashboard',     label: 'Dashboard', icon: LayoutDashboard },
@@ -9,6 +9,7 @@ const links = [
   { href: '/jobs/new',      label: 'New Job',   icon: Plus },
   { href: '/queue',         label: 'Queue',     icon: List },
   { href: '/calendar',      label: 'Calendar',  icon: CalendarDays },
+  { href: '/waitlist',      label: 'Waitlist',  icon: Clock },
   { href: '/search',        label: 'Search',    icon: Search },
   { href: '/settings/shop', label: 'Settings',  icon: Settings },
 ]
