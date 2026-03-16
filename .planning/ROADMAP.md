@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3: Job Detail, Views & Search** - Job detail page, queue and calendar views, search and filters
 - [x] **Phase 4: Customer Portal** - Token-gated no-login portal showing job status, photos, and branded shop identity (completed 2026-03-09)
 - [x] **Phase 5: Payments** - Stripe customer payments on portal, partial payments, balance tracking (completed 2026-03-14)
-- [ ] **Phase 6: Notifications & Waitlist** - Automated branded SMS and email on stage changes, waitlist flow
+- [x] **Phase 6: Notifications & Waitlist** - Automated branded SMS and email on stage changes, waitlist flow (completed 2026-03-16)
 - [ ] **Phase 7: Reports, Supply, Post-Completion & Social** - Revenue reports, supply alerts, post-pickup automation, social consent
 
 ## Phase Details
@@ -151,5 +151,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Job Detail, Views & Search | 2/3 | In Progress|  |
 | 4. Customer Portal | 3/3 | Complete   | 2026-03-09 |
 | 5. Payments | 5/5 | Complete   | 2026-03-14 |
-| 6. Notifications & Waitlist | 2/3 | In Progress|  |
+| 6. Notifications & Waitlist | 3/3 | Complete   | 2026-03-16 |
 | 7. Reports, Supply, Post-Completion & Social | 0/TBD | Not started | - |

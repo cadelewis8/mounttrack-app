@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-16T15:22:15.811Z"
+last_updated: "2026-03-16T15:26:37.764Z"
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 6 of 7 (Notifications & Waitlist) — IN PROGRESS
-Plan: 2 of 3 in current phase — COMPLETE
-Status: 06-02 complete — notification infrastructure (StageUpdateEmail, notifications.ts, Twilio STOP webhook, server actions wired)
-Last activity: 2026-03-16 — 06-02 complete (Twilio SMS + Resend email on stage moves + STOP opt-out handler)
+Plan: 3 of 3 in current phase — awaiting checkpoint:human-verify
+Status: 06-03 auto tasks complete — waitlist page + SMS opt-out badge; checkpoint pending
+Last activity: 2026-03-16 — 06-03 auto tasks complete (waitlist CRUD + nav link + job detail opt-out badge)
 
 Progress: [████████░░] 41% (21 of 29 estimated total plans)
 
@@ -72,6 +72,7 @@ Progress: [████████░░] 41% (21 of 29 estimated total plans)
 | Phase 05-payments P05 | 2 | 2 tasks | 3 files |
 | Phase 06-notifications-waitlist P01 | 3 min | 2 tasks | 3 files |
 | Phase 06-notifications-waitlist P02 | 10 | 3 tasks | 5 files |
+| Phase 06-notifications-waitlist P03 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -142,6 +143,8 @@ Recent decisions affecting current work:
 - [Phase 06-notifications-waitlist P01]: Notification.job_id: string | null — nullable FK pattern for cross-cutting notification types that may precede job creation
 - [Phase 06-notifications-waitlist]: await sendStageNotification() wrapped in try/catch — errors logged but stage move never blocked
 - [Phase 06-notifications-waitlist]: V1 Twilio STOP webhook updates sms_opted_out by customer_phone only (no shop_id) — one Twilio account per deployment, limitation documented
+- [Phase 06-notifications-waitlist]: Animal type is plain text input on waitlist form — pre-intake context, dropdown too restrictive
+- [Phase 06-notifications-waitlist]: deleteWaitlistEntry scoped with shop_id filter — defense-in-depth beyond RLS
 
 ### Pending Todos
 
