@@ -52,6 +52,7 @@ export interface Job {
   referral_source: string | null
   is_rush: boolean
   social_media_consent: boolean
+  sms_opted_out: boolean
   photo_paths: string[]
   notes: string | null
   portal_token: string  // UUID — credential for the public customer portal URL
@@ -82,6 +83,25 @@ export interface Payment {
   stripe_payment_intent_id: string | null
   amount_cents: number
   paid_at: string  // ISO timestamp string
+}
+
+export interface Notification {
+  id: string
+  shop_id: string
+  job_id: string | null    // null for waitlist_confirm type
+  channel: 'sms' | 'email'
+  type: 'stage_update' | 'payment_request' | 'waitlist_confirm'
+  stage_name: string | null
+  sent_at: string
+}
+
+export interface WaitlistEntry {
+  id: string
+  shop_id: string
+  name: string
+  phone: string
+  animal_type: string
+  created_at: string
 }
 
 export interface Database {
@@ -129,6 +149,18 @@ export interface Database {
         Row: Payment
         Insert: Omit<Payment, 'id' | 'paid_at'> & { id?: string; paid_at?: string }
         Update: Partial<Omit<Payment, 'id' | 'shop_id' | 'job_id'>>
+        Relationships: []
+      }
+      notifications: {
+        Row: Notification
+        Insert: Omit<Notification, 'id' | 'sent_at'> & { id?: string; sent_at?: string }
+        Update: Partial<Omit<Notification, 'id' | 'shop_id'>>
+        Relationships: []
+      }
+      waitlist: {
+        Row: WaitlistEntry
+        Insert: Omit<WaitlistEntry, 'id' | 'created_at'> & { id?: string; created_at?: string }
+        Update: Partial<Omit<WaitlistEntry, 'id' | 'shop_id'>>
         Relationships: []
       }
     }
