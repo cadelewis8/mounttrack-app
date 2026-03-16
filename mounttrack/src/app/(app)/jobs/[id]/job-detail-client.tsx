@@ -181,7 +181,14 @@ export function JobDetailClient({ job, stages, photoUrls, jobPayments }: JobDeta
               <Section title="Customer">
                 <div className="grid grid-cols-2 gap-3">
                   <Field label="Name *" name="customer_name" defaultValue={job.customer_name} required />
-                  <Field label="Phone" name="customer_phone" type="tel" defaultValue={job.customer_phone ?? ''} />
+                  <div className="flex flex-col gap-1">
+                    <Field label="Phone" name="customer_phone" type="tel" defaultValue={job.customer_phone ?? ''} />
+                    {job.sms_opted_out && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                        SMS opted out
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <Field label="Email" name="customer_email" type="email" defaultValue={job.customer_email ?? ''} />
               </Section>
