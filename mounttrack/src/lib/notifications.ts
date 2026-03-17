@@ -4,12 +4,27 @@ import { render } from '@react-email/components'
 import { StageUpdateEmail } from '@/emails/StageUpdateEmail'
 import { createServiceClient } from '@/lib/supabase/service'
 
-// Singleton clients — initialized once at module level
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID!,
-  process.env.TWILIO_AUTH_TOKEN!
-)
-const resend = new Resend(process.env.RESEND_API_KEY!)
+// Lazy-initialized clients — created on first use so missing env vars don't
+// crash the app at module load time (e.g. during local dev without API keys).
+let _twilioClient: ReturnType<typeof twilio> | null = null
+let _resend: Resend | null = null
+
+function getTwilioClient() {
+  if (!_twilioClient) {
+    _twilioClient = twilio(
+      process.env.TWILIO_ACCOUNT_SID!,
+      process.env.TWILIO_AUTH_TOKEN!
+    )
+  }
+  return _twilioClient
+}
+
+function getResend() {
+  if (!_resend) {
+    _resend = new Resend(process.env.RESEND_API_KEY!)
+  }
+  return _resend
+}
 
 // ---------------------------------------------------------------------------
 // Payload types
@@ -55,7 +70,7 @@ interface WaitlistSmsPayload {
 
 async function sendSms(to: string, body: string): Promise<boolean> {
   try {
-    await twilioClient.messages.create({
+    await getTwilioClient().messages.create({
       from: process.env.TWILIO_PHONE_NUMBER!,
       to,
       body,
@@ -74,7 +89,7 @@ async function sendEmail(opts: {
   html: string
 }): Promise<boolean> {
   try {
-    await resend.emails.send(opts)
+    await getResend().emails.send(opts)
     return true
   } catch (err) {
     console.error('[notifications] Email send failed:', err)
