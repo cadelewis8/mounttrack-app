@@ -128,6 +128,203 @@
   }
 }
 
-/* react-big-calendar Tailwind fix */
+/* ============================================================
+   react-big-calendar — dark theme overrides
+   ============================================================ */
+
+/* Box-model fix (required with Tailwind) */
 .rbc-calendar { box-sizing: border-box; }
 .rbc-calendar * { box-sizing: border-box; }
+
+/* Hide default toolbar — we render our own above the Calendar */
+.rbc-toolbar { display: none !important; }
+
+/* ── Month view ─────────────────────────────────────────────── */
+.rbc-month-view {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: oklch(0.205 0 0);
+}
+
+/* Day-name header row (Sun, Mon …) */
+.rbc-header {
+  padding: 8px 4px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: oklch(0.556 0 0);
+  background: transparent;
+}
+.rbc-header + .rbc-header {
+  border-left: 1px solid rgb(255 255 255 / 0.08);
+}
+
+/* Week rows */
+.rbc-month-row {
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+/* Day cell backgrounds */
+.rbc-day-bg {
+  background: transparent;
+}
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid rgb(255 255 255 / 0.08);
+}
+
+/* Cells outside the current month */
+.rbc-off-range-bg {
+  background: oklch(0.175 0 0);
+}
+.rbc-off-range .rbc-button-link {
+  color: oklch(0.45 0 0);
+}
+
+/* TODAY cell — subtle purple tint instead of harsh white */
+.rbc-day-bg.rbc-today {
+  background: rgb(139 92 246 / 0.1) !important;
+}
+
+/* Date numbers */
+.rbc-date-cell {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+.rbc-date-cell .rbc-button-link {
+  color: oklch(0.708 0 0);
+  font-size: 0.8rem;
+}
+
+/* TODAY date number — small filled circle */
+.rbc-date-cell.rbc-now .rbc-button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+/* Row content area */
+.rbc-row-content {
+  z-index: 1;
+}
+
+/* Show-more link */
+.rbc-show-more {
+  font-size: 0.7rem;
+  color: oklch(0.556 0 0);
+  background: transparent;
+  padding: 1px 6px;
+}
+.rbc-show-more:hover {
+  color: oklch(0.985 0 0);
+}
+
+/* ── Events ─────────────────────────────────────────────────── */
+.rbc-event {
+  border-radius: 4px !important;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border: none !important;
+  outline: none;
+}
+.rbc-event:focus {
+  outline: 2px solid rgb(139 92 246 / 0.6);
+  outline-offset: 1px;
+}
+.rbc-event.rbc-selected {
+  filter: brightness(1.15);
+}
+.rbc-event-label {
+  display: none; /* hide time label in week view for all-day events */
+}
+
+/* ── Week / Time view ───────────────────────────────────────── */
+.rbc-time-view {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: oklch(0.205 0 0);
+}
+
+.rbc-time-header {
+  background: transparent;
+}
+.rbc-time-header-content {
+  border-left: 1px solid rgb(255 255 255 / 0.08);
+}
+.rbc-time-header.rbc-overflowing {
+  border-right: 0;
+}
+
+/* Week view — day column headers */
+.rbc-time-header .rbc-header {
+  padding: 10px 4px;
+  font-size: 0.75rem;
+}
+
+/* Week view — all-day row */
+.rbc-allday-cell {
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+.rbc-allday-cell .rbc-row-bg .rbc-day-bg.rbc-today {
+  background: rgb(139 92 246 / 0.1) !important;
+}
+
+/* Week view — time content area */
+.rbc-time-content {
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+  background: transparent;
+}
+.rbc-time-content > * + * > * {
+  border-left: 1px solid rgb(255 255 255 / 0.08);
+}
+
+/* Time slot groups */
+.rbc-timeslot-group {
+  border-bottom: 1px solid rgb(255 255 255 / 0.05);
+  min-height: 48px;
+}
+.rbc-time-slot {
+  color: oklch(0.45 0 0);
+  font-size: 0.68rem;
+}
+.rbc-label {
+  padding: 0 10px;
+  font-size: 0.68rem;
+  color: oklch(0.556 0 0);
+}
+
+/* Today column in week view */
+.rbc-time-column.rbc-today,
+.rbc-time-view .rbc-day-bg.rbc-today {
+  background: rgb(139 92 246 / 0.08) !important;
+}
+.rbc-time-header .rbc-header.rbc-today {
+  background: rgb(139 92 246 / 0.12);
+  color: oklch(0.985 0 0);
+}
+
+/* Current time indicator */
+.rbc-current-time-indicator {
+  background: #8b5cf6;
+  height: 2px;
+}
+.rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8b5cf6;
+}
