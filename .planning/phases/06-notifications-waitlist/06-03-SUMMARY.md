@@ -45,9 +45,14 @@ key-decisions:
   - "SMS badge wraps Phone Field in flex column div — minimal DOM change, badge appears directly below input"
   - "deleteWaitlistEntry scoped with .eq('shop_id', userId) — RLS safety even if RLS is also active"
 
+requirements-completed:
+  - WAIT-01
+  - WAIT-02
+  - NOTIF-04
+
 # Metrics
 duration: 3min
-completed: 2026-03-16
+completed: 2026-03-17
 ---
 
 # Phase 6 Plan 03: Waitlist Management + SMS Opt-Out Badge Summary
@@ -59,7 +64,7 @@ completed: 2026-03-16
 - **Duration:** ~3 min
 - **Started:** 2026-03-16T15:23:38Z
 - **Completed:** 2026-03-16T15:25:44Z
-- **Tasks:** 2 of 3 auto tasks complete (checkpoint:human-verify pending)
+- **Tasks:** 2 auto tasks + checkpoint:human-verify (approved 2026-03-17)
 - **Files modified:** 5 (3 created, 2 modified)
 
 ## Accomplishments
@@ -98,8 +103,18 @@ None - plan executed exactly as written.
 
 ## Checkpoint
 
-Task 3 is a `checkpoint:human-verify` — awaiting user verification before this plan is considered fully complete.
+Task 3 was a `checkpoint:human-verify` — approved 2026-03-17. All verification steps passed.
+
+## User Setup Required
+
+Inherited from Plan 02 — Twilio and Resend credentials must be set in `.env.local` for SMS to deliver. No new setup required for this plan.
+
+## Next Phase Readiness
+
+- Phase 6 (Notifications & Waitlist) is fully complete: NOTIF-01 through NOTIF-04 and WAIT-01, WAIT-02 all fulfilled
+- Phase 7 (Reports, Supply, Post-Completion & Social) is the next planned phase
+- Twilio A2P 10DLC registration still required for production SMS delivery
 
 ---
 *Phase: 06-notifications-waitlist*
-*Completed: 2026-03-16 (auto tasks) — checkpoint pending*
+*Completed: 2026-03-17*

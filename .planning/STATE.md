@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-16T15:26:37.764Z"
+last_updated: "2026-03-18T14:14:18.482Z"
 progress:
   total_phases: 6
   completed_phases: 6
@@ -22,10 +22,10 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 
 ## Current Position
 
-Phase: 6 of 7 (Notifications & Waitlist) — IN PROGRESS
-Plan: 3 of 3 in current phase — awaiting checkpoint:human-verify
-Status: 06-03 auto tasks complete — waitlist page + SMS opt-out badge; checkpoint pending
-Last activity: 2026-03-16 — 06-03 auto tasks complete (waitlist CRUD + nav link + job detail opt-out badge)
+Phase: 6 of 7 (Notifications & Waitlist) — COMPLETE
+Plan: 3 of 3 in current phase — all plans complete
+Status: Phase 6 fully complete — waitlist CRUD, notifications, SMS opt-out badge; checkpoint approved 2026-03-17
+Last activity: 2026-03-17 — 06-03 checkpoint approved (waitlist + SMS opt-out badge verified)
 
 Progress: [████████░░] 41% (21 of 29 estimated total plans)
 
@@ -143,7 +143,7 @@ Recent decisions affecting current work:
 - [Phase 06-notifications-waitlist P01]: Notification.job_id: string | null — nullable FK pattern for cross-cutting notification types that may precede job creation
 - [Phase 06-notifications-waitlist]: await sendStageNotification() wrapped in try/catch — errors logged but stage move never blocked
 - [Phase 06-notifications-waitlist]: V1 Twilio STOP webhook updates sms_opted_out by customer_phone only (no shop_id) — one Twilio account per deployment, limitation documented
-- [Phase 06-notifications-waitlist]: Animal type is plain text input on waitlist form — pre-intake context, dropdown too restrictive
+- [Phase 06-notifications-waitlist]: Animal type is plain text input on waitlist form — pre-intake context, dropdown too restrictive for unlisted species
 - [Phase 06-notifications-waitlist]: deleteWaitlistEntry scoped with shop_id filter — defense-in-depth beyond RLS
 
 ### Pending Todos
@@ -158,6 +158,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16
-Stopped at: Completed 06-02-PLAN.md — notification infrastructure (StageUpdateEmail, notifications.ts, Twilio STOP webhook, stage action wiring)
+Last session: 2026-03-17
+Stopped at: Completed 06-03-PLAN.md — waitlist CRUD + nav link + SMS opt-out badge; Phase 6 fully complete
 Resume file: None
