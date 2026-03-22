@@ -109,7 +109,7 @@ export default function Home() {
       <section id="contact" style={{ padding: "60px 48px", background: "#161b22", borderTop: "1px solid #21262d", textAlign: "center" }}>
         <h2 style={{ fontSize: "28px", fontWeight: "normal", marginBottom: "16px" }}>Questions? We're real people.</h2>
         <p style={{ color: "#8b949e", fontFamily: "sans-serif", marginBottom: "24px" }}>Reach out any time — we'll get back to you same day.</p>
-        <a href="mailto:hello@mounttrack.com" style={{ color: "#c9a84c", fontFamily: "sans-serif", fontSize: "18px" }}>hello@mounttrack.com</a>
+        <a href="mailto:mounttracksupport@gmail.com" style={{ color: "#c9a84c", fontFamily: "sans-serif", fontSize: "18px" }}>mounttracksupport@gmail.com</a>
         <p style={{ color: "#8b949e", fontFamily: "sans-serif", fontSize: "13px", marginTop: "16px" }}>Clinton, SC · United States</p>
       </section>
 

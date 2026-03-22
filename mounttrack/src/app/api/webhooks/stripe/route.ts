@@ -70,13 +70,18 @@ export async function POST(req: Request) {
         if (existing) break  // already processed
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (supabase.from('payments') as any).insert({
+        const { error: insertError } = await (supabase.from('payments') as any).insert({
           job_id: jobId,
           shop_id: session.metadata?.shop_id,
           stripe_session_id: session.id,
           stripe_payment_intent_id: session.payment_intent as string | null,
           amount_cents: session.amount_total ?? 0,
         })
+        if (insertError) {
+          console.error('payments insert failed:', insertError)
+          throw insertError
+        }
+        console.log('payment recorded:', session.id, 'amount:', session.amount_total)
         break
       }
 
