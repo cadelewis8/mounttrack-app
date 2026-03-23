@@ -159,7 +159,7 @@ export async function sendStageNotification(payload: StageNotificationPayload): 
       )
       const sent = await sendEmail({
         to: customerEmail,
-        from: `${shopName} <notifications@mounttrack.app>`,
+        from: `${shopName} <notifications@mounttrack.net>`,
         subject: `Your mount has moved to ${stageName}`,
         html,
       })
@@ -226,7 +226,7 @@ export async function sendPaymentRequestNotification(payload: PaymentRequestNoti
       )
       const sent = await sendEmail({
         to: customerEmail,
-        from: `${shopName} <notifications@mounttrack.app>`,
+        from: `${shopName} <notifications@mounttrack.net>`,
         subject: 'Your mount is ready — complete payment',
         html,
       })
